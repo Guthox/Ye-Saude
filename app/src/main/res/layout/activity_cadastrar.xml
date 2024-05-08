@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#729487"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnCadastrar"
+        android:layout_width="180dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="176dp"
+        android:backgroundTint="#F1F8E9"
+        android:text="Cadastrar"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
+    <EditText
+        android:id="@+id/usuario"
+        android:layout_width="249dp"
+        android:layout_height="50dp"
+        android:background="@drawable/caixa_login"
+        android:ems="10"
+        android:hint="Usuário"
+        android:inputType="text"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#CD232323"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@drawable/caixa_login"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="text"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#CD232323"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.581" />
+
+
+    <EditText
+        android:id="@+id/senha"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@drawable/caixa_login"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#CD232323"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.661" />
+
+    <TextView
+        android:id="@+id/bemVindo"
+        android:layout_width="204dp"
+        android:layout_height="33dp"
+        android:text="Seja bem-vindo(a)!"
+        android:textAlignment="center"
+        android:textColor="#CACACA"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.422" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="320dp"
+        android:layout_height="249dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.062"
+        app:srcCompat="@drawable/saocamilo" />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="176dp"
+        android:gravity="center"
+        android:layout_height="48dp"
+        android:text="Já possuo cadastro"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.336"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.732" />
+
+    <TextView
+        android:id="@+id/erro"
+        android:layout_width="278dp"
+        android:layout_height="54dp"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.805" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

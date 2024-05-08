@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Menu">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:background="#475D55"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagemUsuario"
+        android:layout_width="145dp"
+        android:layout_height="145dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.208"
+        app:shapeAppearanceOverlay="@style/Circular"
+        app:srcCompat="@drawable/ef3b22608fab54c62ec8c84dba9e3e13"
+        app:strokeColor="#475D55"
+        app:strokeWidth="5dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/nomeUsuario"
+        android:layout_width="311dp"
+        android:layout_height="53dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="José Silva"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/localUsuario"
+        android:layout_width="181dp"
+        android:layout_height="27dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="São Paulo, Brasil"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <TextView
+        android:id="@+id/tituloCaixa1"
+        android:layout_width="150dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="Última aferição de pressão"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.549" />
+
+    <TextView
+        android:id="@+id/tituloCaixa3"
+        android:layout_width="150dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="Última aferição de pressão"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.724" />
+
+    <TextView
+        android:id="@+id/caixa3Cima"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="90kg"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.789" />
+
+    <TextView
+        android:id="@+id/caixa3Baixo"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="170cm"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa_baixo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.844" />
+
+    <TextView
+        android:id="@+id/caixa4Cima"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="31,14"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.789" />
+
+    <TextView
+        android:id="@+id/caixa4Baixo"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="Obesidade III"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa_baixo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.844" />
+
+    <TextView
+        android:id="@+id/tituloCaixa4"
+        android:layout_width="150dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="Última aferição de glicemia"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.724" />
+
+    <TextView
+        android:id="@+id/caixa1Cima"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="150x100"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.612" />
+
+    <TextView
+        android:id="@+id/caixa1Baixo"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="Alta"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa_baixo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.667" />
+
+    <TextView
+        android:id="@+id/caixa2Cima"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="85mg/DI"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.612" />
+
+    <TextView
+        android:id="@+id/caixa2Baixo"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="Normal"
+        android:textColor="@color/black"
+        android:background="@drawable/caixa_baixo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.667" />
+
+    <TextView
+        android:id="@+id/tituloCaixa2"
+        android:layout_width="150dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="Última aferição de glicemia"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.548" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
