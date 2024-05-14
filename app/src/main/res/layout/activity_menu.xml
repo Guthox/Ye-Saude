@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Menu">
+    tools:context=".TelaInicial">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -87,7 +87,7 @@
         android:layout_width="150dp"
         android:layout_height="34dp"
         android:gravity="center"
-        android:text="Última aferição de pressão"
+        android:text="Última verificação de peso e altura"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
@@ -114,16 +114,18 @@
         android:id="@+id/caixa3Baixo"
         android:layout_width="150dp"
         android:layout_height="45dp"
+
+        android:layout_marginTop="5dp"
+        android:background="@drawable/caixa_baixo"
         android:gravity="center"
         android:text="170cm"
         android:textColor="@color/black"
-        android:background="@drawable/caixa_baixo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintVertical_bias="0.84" />
 
     <TextView
         android:id="@+id/caixa4Cima"
@@ -144,23 +146,24 @@
         android:id="@+id/caixa4Baixo"
         android:layout_width="150dp"
         android:layout_height="45dp"
+        android:background="@drawable/caixa_baixo"
         android:gravity="center"
         android:text="Obesidade III"
         android:textColor="@color/black"
-        android:background="@drawable/caixa_baixo"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintVertical_bias="0.841" />
 
     <TextView
         android:id="@+id/tituloCaixa4"
         android:layout_width="150dp"
         android:layout_height="34dp"
         android:gravity="center"
-        android:text="Última aferição de glicemia"
+        android:text="IMC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.938"
@@ -183,20 +186,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.612" />
 
+
+
+
     <TextView
         android:id="@+id/caixa1Baixo"
         android:layout_width="150dp"
         android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/caixa_baixo"
         android:gravity="center"
         android:text="Alta"
         android:textColor="@color/black"
-        android:background="@drawable/caixa_baixo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.667" />
+        app:layout_constraintVertical_bias="0.663" />
 
     <TextView
         android:id="@+id/caixa2Cima"
@@ -217,16 +224,17 @@
         android:id="@+id/caixa2Baixo"
         android:layout_width="150dp"
         android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/caixa_baixo"
         android:gravity="center"
         android:text="Normal"
         android:textColor="@color/black"
-        android:background="@drawable/caixa_baixo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.667" />
+        app:layout_constraintVertical_bias="0.663" />
 
     <TextView
         android:id="@+id/tituloCaixa2"
@@ -240,6 +248,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.548" />
+
+    <TextView
+        android:id="@+id/scroll2"
+        android:layout_width="97dp"
+        android:layout_height="50dp"
+        android:background="@drawable/scroll2"
+        android:gravity="center"
+        android:text="Consultas"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.953" />
+
+    <TextView
+        android:id="@+id/scroll3"
+        android:layout_width="97dp"
+        android:layout_height="50dp"
+        android:background="@drawable/scroll3"
+        android:gravity="center"
+        android:text="Medicação"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.953" />
+
+    <TextView
+        android:id="@+id/scroll1"
+        android:layout_width="97dp"
+        android:layout_height="50dp"
+        android:background="@drawable/scroll1"
+        android:gravity="center"
+        android:text="Exames"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.953" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
