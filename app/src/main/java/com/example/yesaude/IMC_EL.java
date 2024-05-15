@@ -2,6 +2,8 @@ package com.example.yesaude;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -26,6 +28,12 @@ public class IMC_EL extends AppCompatActivity {
         setContentView(R.layout.activity_imc_el);
         createGroupList();
         createCollection();
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
+
         expandableListView = findViewById(R.id.listaDatas);
         expandableListAdapter = new MyExpandableListAdapter(this, groupList, childColecao);
         expandableListView.setAdapter(expandableListAdapter);
