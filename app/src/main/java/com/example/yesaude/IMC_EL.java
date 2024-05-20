@@ -11,9 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class IMC_EL extends AppCompatActivity {
     List<String> groupList;
@@ -21,7 +25,7 @@ public class IMC_EL extends AppCompatActivity {
     Map<String, List<String>> childColecao;
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
-
+    BancoIMC imc = new BancoIMC(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,46 +51,45 @@ public class IMC_EL extends AppCompatActivity {
                 lastExpandedPosition = i;
             }
         });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                String selected = expandableListAdapter.getChild(i,i1).toString();
-                Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+
+//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+//                String selected = expandableListAdapter.getChild(i,i1).toString();
+//                Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//        });
     }
 
     private void createCollection() {
-        String[] childExemplo1 = {"Item 1", "Item 2",
-                "Item 3"};
-        String[] childExemplo2 = {"Item 4", "Item 5",
-                "Item 6"};
-        String[] childExemplo3 = {"Item 7", "Item 8",
-                "Item 9"};
-        String[] childExemplo4 = {"Item 10", "Item 11",
-                "Item 12"};
-        String[] childExemplo5 = {"Item 13", "Item 14",
-                "Item 15"};
-        String[] childExemplo6 = {"Item 16", "Item 17",
-                "Item 18"};
+        LinkedList<String[]> lista = new LinkedList<>();
+        String medidas = imc.pegarDados();
+        Scanner sc = new Scanner(medidas);
+        int indice = 0;
+        while (sc.hasNextLine()){
+            String linha = sc.nextLine();
+            Scanner scItem = new Scanner(linha);
+            scItem.useDelimiter(",");
+            String[] item = new String[4];
+            item[0] = "Altura: " + scItem.next();
+            item[1] = "Peso: " + scItem.next();
+            item[2] = "IMC: " + scItem.next();
+            item[3] = "Dia: " + scItem.next();
+            lista.add(item);
+        }
+        sc.close();
         childColecao = new HashMap<String, List<String>>();
+        int n = 0;
         for(String group : groupList){
-            if (group.equals("childExemplo1")){
-                loadChild(childExemplo1);
-            } else if (group.equals("childExemplo2"))
-                loadChild(childExemplo2);
-            else if (group.equals("childExemplo3"))
-                loadChild(childExemplo3);
-            else if (group.equals("childExemplo4"))
-                loadChild(childExemplo4);
-            else if (group.equals("childExemplo5"))
-                loadChild(childExemplo5);
-            else
-                loadChild(childExemplo6);
+            if (group.equals("Medida " + (n + 1))){
+                loadChild(lista.get(n));
+            }
+            n++;
             childColecao.put(group, childList);
         }
     }
+
 
     private void loadChild(String[] mobileModels) {
         childList = new ArrayList<>();
@@ -97,11 +100,10 @@ public class IMC_EL extends AppCompatActivity {
 
     private void createGroupList() {
         groupList = new ArrayList<>();
-        groupList.add("childExemplo1");
-        groupList.add("childExemplo2");
-        groupList.add("childExemplo3");
-        groupList.add("childExemplo4");
-        groupList.add("childExemplo5");
-        groupList.add("childExemplo6");
+        int n = imc.contarTuplas();
+        for (int i = 0; i < n; i++){
+            groupList.add("Medida " + (i + 1));
+        }
     }
+
 }

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import org.w3c.dom.Text;
+
+import java.util.Scanner;
 
 public class Menu extends AppCompatActivity {
 
@@ -41,5 +47,49 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        TextView peso = findViewById(R.id.caixa3Cima);
+        TextView altura = findViewById(R.id.caixa3Baixo);
+        TextView imc = findViewById(R.id.caixa4Cima);
+        TextView desc = findViewById(R.id.caixa4Baixo);
+        BancoIMC bdImc = new BancoIMC(this);
+
+        String dados = bdImc.ultimaMedida();
+        Scanner sc = new Scanner(dados);
+        sc.useDelimiter(",");
+        altura.setText(sc.next() + " m");
+        peso.setText(sc.next() + " kg");
+        imc.setText(sc.next());
+        if (imc.getText().equals("---")){
+            desc.setText("---");
+        }
+        else{
+            String texto = "";
+            double grau;
+            try{
+                grau = Double.parseDouble(imc.getText().toString());
+                if (grau < 18.5){
+                    texto = "Abaixo do peso";
+                }
+                else if (grau <= 24.9){
+                    texto = "Peso ideal";
+                }
+                else if (grau <= 34.9){
+                    texto = "Obesidade I";
+                }
+                else if (grau <= 39.9){
+                    texto = "Obesidade II";
+                }
+                else{
+                    texto = "Obesidade III";
+                }
+            }
+            catch (Exception e){
+                texto = "---";
+            }
+
+            desc.setText(texto);
+        }
+        sc.close();
+
     }
 }
