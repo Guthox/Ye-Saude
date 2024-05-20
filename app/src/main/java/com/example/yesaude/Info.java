@@ -1,16 +1,14 @@
 package com.example.yesaude;
 
-import android.app.Application;
+public class Info {
+    private static String username;
 
-public class Info extends Application {
-    private String username;
-
-    public String getUsername() {
+    public static String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public static void setUsername(String user) {
+        username = user;
     }
 
 }

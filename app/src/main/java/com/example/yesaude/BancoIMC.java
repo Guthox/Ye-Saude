@@ -46,7 +46,7 @@ public class BancoIMC extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT altura, peso, indiceIMC, data FROM IMC WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT user, altura, peso, indiceIMC, data FROM IMC WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -94,8 +94,7 @@ public class BancoIMC extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        String query = "SELECT altura, peso, indiceIMC FROM IMC ORDER BY ID DESC LIMIT 1";
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery("SELECT user, altura, peso, indiceIMC FROM IMC WHERE user = ? ORDER BY ID DESC LIMIT 1", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             int alturaIndex = cursor.getColumnIndex("altura");

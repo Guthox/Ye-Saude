@@ -81,7 +81,8 @@ public class Menu extends AppCompatActivity {
 
         BancoIMC bdImc = new BancoIMC(this);
 
-        String dados = bdImc.ultimaMedida(((Info) getApplication()).getUsername());
+        //String dados = bdImc.ultimaMedida(((Info) getApplication()).getUsername());
+        String dados = "---,---,---";
         Scanner sc = new Scanner(dados);
         sc.useDelimiter(",");
         altura.setText(sc.next() + " m");

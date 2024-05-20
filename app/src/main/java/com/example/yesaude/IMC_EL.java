@@ -64,7 +64,7 @@ public class IMC_EL extends AppCompatActivity {
 
     private void createCollection() {
         LinkedList<String[]> lista = new LinkedList<>();
-        String medidas = imc.pegarDados(((Info) getApplication()).getUsername());
+        String medidas = imc.pegarDados(Info.getUsername());
         Scanner sc = new Scanner(medidas);
         int indice = 0;
         while (sc.hasNextLine()){
@@ -100,7 +100,7 @@ public class IMC_EL extends AppCompatActivity {
 
     private void createGroupList() {
         groupList = new ArrayList<>();
-        int n = imc.contarTuplas(((Info) getApplication()).getUsername());
+        int n = imc.contarTuplas(Info.getUsername());
         for (int i = 0; i < n; i++){
             groupList.add("Medida " + (i + 1));
         }
