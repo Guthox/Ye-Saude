@@ -28,6 +28,7 @@ public class Menu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
 
+        // Deixa o menu no topo em verde escuro.
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -39,6 +40,9 @@ public class Menu extends AppCompatActivity {
             return insets;
         });
 
+
+        // ######################################## BOTOES #########################################
+        // Ao clicar nos quadrados de imc, peso e altura, muda a tela para a tela de IMC.
         Button btnImc = findViewById(R.id.btnImc);
         btnImc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,13 +51,37 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button btnImc2 = findViewById(R.id.btnImc2);
+        btnImc2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, IMC_EL.class);
+                startActivity(intent);
+            }
+        });
+
+        // #########################################################################################
+
+        // Coloca os ultimos valores no menu principal.
+        informarIMC();
+
+
+
+    }
+
+
+
+    // Coloca os valores de peso, altura e imc no menu princiapal
+    // Coloca --- se não tiver nenhuma medida
+    private void informarIMC(){
         TextView peso = findViewById(R.id.caixa3Cima);
         TextView altura = findViewById(R.id.caixa3Baixo);
         TextView imc = findViewById(R.id.caixa4Cima);
         TextView desc = findViewById(R.id.caixa4Baixo);
+
         BancoIMC bdImc = new BancoIMC(this);
 
-        String dados = bdImc.ultimaMedida();
+        String dados = bdImc.ultimaMedida(((Info) getApplication()).getUsername());
         Scanner sc = new Scanner(dados);
         sc.useDelimiter(",");
         altura.setText(sc.next() + " m");
@@ -90,6 +118,5 @@ public class Menu extends AppCompatActivity {
             desc.setText(texto);
         }
         sc.close();
-
     }
 }

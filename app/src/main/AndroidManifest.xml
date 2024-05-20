@@ -16,6 +16,9 @@
             android:name=".IMC_EL"
             android:exported="false" />
         <activity
+            android:name=".Info"
+            android:exported="false" />
+        <activity
             android:name=".Cadastrar"
             android:exported="false" />
         <activity

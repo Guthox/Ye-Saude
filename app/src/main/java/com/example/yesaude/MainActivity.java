@@ -41,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 String usuario = edit.getText().toString();
                 edit = findViewById(R.id.senha);
                 String senha = edit.getText().toString();
-                //if (bd.checkLogin(usuario, senha)){
-                if (true){
+                if (bd.checkLogin(usuario, senha)){
+                //if (true){
+                    ((Info) getApplication()).setUsername(usuario);
                     TextView erro = findViewById(R.id.txtInvalido);
                     erro.setText("");
                     Intent intent = new Intent(MainActivity.this, Menu.class);

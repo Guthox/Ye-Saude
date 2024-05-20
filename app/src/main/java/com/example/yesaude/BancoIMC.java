@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class BancoIMC extends SQLiteOpenHelper {
-
+// Exemplo de uso
 //    BancoIMC imc = new BancoIMC(this);
 //    imc.inserir(1.83, 94.0, 27.3, "hoje");
     public static final String databaseName = "IMC.db";
@@ -20,7 +20,7 @@ public class BancoIMC extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table IMC (id INTEGER primary key AUTOINCREMENT, altura REAL not null, peso REAL not null, indiceIMC REAL not null, data TEXT not null)");
+        db.execSQL("create table IMC (id INTEGER primary key AUTOINCREMENT, user TEXT not null, altura REAL not null, peso REAL not null, indiceIMC REAL not null, data TEXT not null)");
     }
 
     @Override
@@ -28,9 +28,10 @@ public class BancoIMC extends SQLiteOpenHelper {
         db.execSQL("drop table if exists IMC");
     }
 
-    public boolean inserir(double altura, double peso, double indiceIMC, String data){
+    public boolean inserir(String user, double altura, double peso, double indiceIMC, String data){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put("user", user);
         contentValues.put("altura", altura);
         contentValues.put("peso", peso);
         contentValues.put("indiceIMC", indiceIMC);
@@ -39,12 +40,13 @@ public class BancoIMC extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public String pegarDados(){
+    // Devolve um csv com os dados da tabela.
+    // O id não é incluso.
+    public String pegarDados(String user){
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        String query = "SELECT altura, peso, indiceIMC, data FROM IMC";
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery("SELECT altura, peso, indiceIMC, data FROM IMC WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -74,16 +76,21 @@ public class BancoIMC extends SQLiteOpenHelper {
         }
         return dados.toString();
     }
-    public int contarTuplas(){
+
+    // Conta o número de tuplas da tabela
+    public int contarTuplas(String user){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM IMC", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM IMC WHERE user = ?",new String[]{user});
         int x = cursor.getCount();
         cursor.close();
         return x;
     }
 
-    public String ultimaMedida(){
-        if (contarTuplas() == 0) return "---,---,---";
+
+    // Devolve um csv de uma linha contendo os valores da ultima medida para colocar no menu principal
+    // Devolve --- se não tiver nenhuma medida no banco de dados.
+    public String ultimaMedida(String user){
+        if (contarTuplas(user) == 0) return "---,---,---";
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
