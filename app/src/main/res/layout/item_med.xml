@@ -18,11 +18,21 @@
         android:layout_marginLeft="10dp"
         android:textSize="25dp"/>
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.25"
+        android:layout_height="wrap_content"
+        android:id="@+id/centro"
+        android:textColor="@color/black"
+        android:text=""
+        android:textSize="25dp" />
+
 
     <TextView
         android:layout_width="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.25"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:id="@+id/horario"
         android:textColor="@color/black"
         android:text="Horario"

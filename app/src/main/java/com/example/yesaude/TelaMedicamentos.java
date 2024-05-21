@@ -1,6 +1,8 @@
 package com.example.yesaude;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +21,12 @@ public class TelaMedicamentos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_medicamentos);
+
+        // Deixa o menu no topo em verde escuro.
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
 
         RecyclerView recyclerView = findViewById(R.id.lista);
 
