@@ -42,6 +42,15 @@ public class Menu extends AppCompatActivity {
 
 
         // ######################################## BOTOES #########################################
+        Button buttonMed = findViewById(R.id.buttonMed);
+        buttonMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, TelaMedicamentos.class);
+                startActivity(intent);
+            }
+        });
+
         // Ao clicar nos quadrados de imc, peso e altura, muda a tela para a tela de IMC.
         Button btnImc = findViewById(R.id.btnImc);
         btnImc.setOnClickListener(new View.OnClickListener() {
