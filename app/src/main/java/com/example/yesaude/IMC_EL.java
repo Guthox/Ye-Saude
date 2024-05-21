@@ -1,18 +1,13 @@
 package com.example.yesaude;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

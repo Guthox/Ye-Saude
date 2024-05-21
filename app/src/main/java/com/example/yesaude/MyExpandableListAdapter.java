@@ -93,6 +93,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                         BancoIMC imc = new BancoIMC(v.getContext());
                         imc.remover(Info.getIdEscolhido());
                         notifyDataSetChanged();
+                        expandableListView.collapseGroup(i);
                         atividade.recreate();
                     }
                 });
@@ -114,9 +115,11 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 Info.setIdEscolhido(id);
                 if (expandableListView.isGroupExpanded(i)){
                     expandableListView.collapseGroup(i);
+                    delete.setVisibility(View.INVISIBLE);
                 }
                 else{
                     expandableListView.expandGroup(i);
+                    delete.setVisibility(View.VISIBLE);
                 }
 
             }

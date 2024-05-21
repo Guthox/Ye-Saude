@@ -73,11 +73,15 @@ public class Menu extends AppCompatActivity {
         });
 
         // #########################################################################################
-        
+        BancoIMC imc = new BancoIMC(this);
+        imc.inserir(Info.getUsername(), 33, 33, 33, "333");
 
     }
-
-
+    @Override
+    protected void onResume(){
+        super.onResume();
+        informarIMC();
+    }
 
     // Coloca os valores de peso, altura e imc no menu princiapal
     // Coloca --- se não tiver nenhuma medida
