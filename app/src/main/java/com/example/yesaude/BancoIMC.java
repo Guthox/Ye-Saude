@@ -41,29 +41,29 @@ public class BancoIMC extends SQLiteOpenHelper {
     }
 
     // Devolve um csv com os dados da tabela.
-    // O id não é incluso.
     public String pegarDados(String user){
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT user, altura, peso, indiceIMC, data FROM IMC WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, user, altura, peso, indiceIMC, data FROM IMC WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-//                int idIndex = cursor.getColumnIndex("id");
+                int idIndex = cursor.getColumnIndex("id");
                 int alturaIndex = cursor.getColumnIndex("altura");
                 int pesoIndex = cursor.getColumnIndex("peso");
                 int indiceIMCIndex = cursor.getColumnIndex("indiceIMC");
                 int dataIndex = cursor.getColumnIndex("data");
 
-                if (alturaIndex != -1 && pesoIndex != -1 && indiceIMCIndex != -1 && dataIndex != -1) {
-//                    int id = cursor.getInt(idIndex);
+                if (idIndex != -1 && alturaIndex != -1 && pesoIndex != -1 && indiceIMCIndex != -1 && dataIndex != -1) {
+                    int id = cursor.getInt(idIndex);
                     float altura = cursor.getFloat(alturaIndex);
                     float peso = cursor.getFloat(pesoIndex);
                     float indiceIMC = cursor.getFloat(indiceIMCIndex);
                     String data = cursor.getString(dataIndex);
 
-                    dados.append(altura)
+                    dados.append(id)
+                            .append(",").append(altura)
                             .append(",").append(peso)
                             .append(",").append(indiceIMC)
                             .append(",").append(data)
@@ -113,6 +113,12 @@ public class BancoIMC extends SQLiteOpenHelper {
             cursor.close();
         }
         return dados.toString();
+    }
+
+    // Deleta dado do banco
+    public void remover(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete("IMC", "id=?", new String[]{""+id});
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.yesaude;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -19,12 +22,15 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private Map<String, List<String>> childColecao;
     private List<String> groupList;
-
+    private ExpandableListView expandableListView;
+    private  Activity atividade;
     public MyExpandableListAdapter(Context context, List<String> groupList,
-                                   Map<String, List<String>> childColecao){
+                                   Map<String, List<String>> childColecao, ExpandableListView expandableListView, Activity atividade){
         this.context = context;
         this.childColecao = childColecao;
         this.groupList = groupList;
+        this.expandableListView = expandableListView;
+        this.atividade = atividade;
     }
 
     @Override
@@ -69,33 +75,25 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.groupitem_imc, null);
         }
+
         TextView item = view.findViewById(R.id.mobile);
         item.setTypeface(null, Typeface.BOLD);
         item.setText(mobileName);
-        return view;
-    }
-    @Override
-    public View getChildView(final int i, final int i1, boolean b, View view, ViewGroup viewGroup) {
-        String model = getChild(i, i1).toString();
-        if (view == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.childitem_imc, null);
-        }
-        TextView item = view.findViewById(R.id.model);
-        ImageView delete = view.findViewById(R.id.delete);
-        item.setText(model);
+
+        ImageView delete = view.findViewById(R.id.deleteGroup);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("Quer deletar esse item?");
                 builder.setCancelable(true);
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
-                        List<String> child = childColecao.get(groupList.get(i));
-                        child.remove(i1);
+                        BancoIMC imc = new BancoIMC(v.getContext());
+                        imc.remover(Info.getIdEscolhido());
                         notifyDataSetChanged();
+                        atividade.recreate();
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -108,6 +106,33 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 alertDialog.show();
             }
         });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = Integer.parseInt(getChild(i, 0).toString().substring(4)); // id da medida
+                Info.setIdEscolhido(id);
+                if (expandableListView.isGroupExpanded(i)){
+                    expandableListView.collapseGroup(i);
+                }
+                else{
+                    expandableListView.expandGroup(i);
+                }
+
+            }
+        });
+        return view;
+    }
+    @Override
+    public View getChildView(final int i, final int i1, boolean b, View view, ViewGroup viewGroup) {
+        String model = getChild(i, i1).toString();
+        if (view == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.childitem_imc, null);
+        }
+
+        TextView item = view.findViewById(R.id.model);
+        item.setText(model);
         return view;
     }
 

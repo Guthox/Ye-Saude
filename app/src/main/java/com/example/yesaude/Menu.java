@@ -34,6 +34,9 @@ public class Menu extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
 
+        // Coloca os ultimos valores no menu principal.
+        informarIMC();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -70,11 +73,7 @@ public class Menu extends AppCompatActivity {
         });
 
         // #########################################################################################
-
-        // Coloca os ultimos valores no menu principal.
-        informarIMC();
-
-
+        
 
     }
 
@@ -90,8 +89,7 @@ public class Menu extends AppCompatActivity {
 
         BancoIMC bdImc = new BancoIMC(this);
 
-        //String dados = bdImc.ultimaMedida(((Info) getApplication()).getUsername());
-        String dados = "---,---,---";
+        String dados = bdImc.ultimaMedida(Info.getUsername());
         Scanner sc = new Scanner(dados);
         sc.useDelimiter(",");
         altura.setText(sc.next() + " m");

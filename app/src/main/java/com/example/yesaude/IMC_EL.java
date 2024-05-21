@@ -39,7 +39,7 @@ public class IMC_EL extends AppCompatActivity {
         window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
 
         expandableListView = findViewById(R.id.listaDatas);
-        expandableListAdapter = new MyExpandableListAdapter(this, groupList, childColecao);
+        expandableListAdapter = new MyExpandableListAdapter(this, groupList, childColecao, expandableListView, this);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int lastExpandedPosition = -1;
@@ -71,11 +71,12 @@ public class IMC_EL extends AppCompatActivity {
             String linha = sc.nextLine();
             Scanner scItem = new Scanner(linha);
             scItem.useDelimiter(",");
-            String[] item = new String[4];
-            item[0] = "Altura: " + scItem.next();
-            item[1] = "Peso: " + scItem.next();
-            item[2] = "IMC: " + scItem.next();
-            item[3] = "Dia: " + scItem.next();
+            String[] item = new String[5];
+            item[0] = "ID: " + scItem.next();
+            item[1] = "Altura: " + scItem.next();
+            item[2] = "Peso: " + scItem.next();
+            item[3] = "IMC: " + scItem.next();
+            item[4] = "Dia: " + scItem.next();
             lista.add(item);
         }
         sc.close();
