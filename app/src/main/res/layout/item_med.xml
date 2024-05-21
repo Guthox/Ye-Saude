@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/custom_border"
+    android:weightSum="1"
+    >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/med"
+        android:textColor="@color/black"
+        android:text="Med"
+        android:layout_marginLeft="10dp"
+        android:textSize="25dp"/>
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:id="@+id/horario"
+        android:textColor="@color/black"
+        android:text="Horario"
+        android:textSize="25dp" />
+
+</LinearLayout>

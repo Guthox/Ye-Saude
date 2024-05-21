@@ -8,47 +8,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelaMedicamentos extends AppCompatActivity {
-    //métodos
-    private String nomeMed;
-    private String horario;
-
-    public TelaMedicamentos(String nomeMed, String horario) {
-        this.nomeMed = nomeMed;
-        this.horario = horario;
-    }
-
-    public String getNome() {
-        return nomeMed;
-    }
-
-    public void setNome(String nomeMed) {
-        this.nomeMed = nomeMed;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    @Override
-    public String toString() {
-        return nomeMed + horario;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_medicamentos);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        RecyclerView recyclerView = findViewById(R.id.lista);
+
+        List<ListaDeMedicamentos> itens = new ArrayList<ListaDeMedicamentos>();
+        itens.add(new ListaDeMedicamentos("Bromazepam", "7:00"));
+        itens.add(new ListaDeMedicamentos("Ibuprofeno", "13:00"));
+        itens.add(new ListaDeMedicamentos("Rivotril", "21:00"));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new AdapterListaMed(getApplicationContext(), itens));
     }
 }
 

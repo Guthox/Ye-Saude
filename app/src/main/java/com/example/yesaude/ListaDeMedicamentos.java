@@ -10,26 +10,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListaDeMedicamentos extends AppCompatActivity {
+public class ListaDeMedicamentos{
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_medicamentos);
+    String meds;
+    String horario;
 
-        List<TelaMedicamentos> meds = todosOsMeds();
-
-        ListView listaDeMedicamentos = (ListView) findViewById(R.id.lista);
-
-        ArrayAdapter<TelaMedicamentos> adapter = new ArrayAdapter<TelaMedicamentos>(this, android.R.layout.simple_list_item_1, meds);
-
-        listaDeMedicamentos.setAdapter(adapter);
-
-    }
-    private List<TelaMedicamentos> todosOsMeds() {
-        return new ArrayList<>(Arrays.asList(
-                new TelaMedicamentos("Ibuprofeno", "13:00"),
-                new TelaMedicamentos("Bromazepam", "7:00")));
+    public ListaDeMedicamentos(String meds, String horario) {
+        this.meds = meds;
+        this.horario = horario;
     }
 
+    public String getMeds() {
+        return meds;
+    }
+
+    public void setMeds(String meds) {
+        this.meds = meds;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
 }
 
