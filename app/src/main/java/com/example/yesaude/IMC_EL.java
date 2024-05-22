@@ -1,11 +1,19 @@
 package com.example.yesaude;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +29,12 @@ public class IMC_EL extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     BancoIMC imc = new BancoIMC(this);
+
+    //Dialogbox calculadora variaveis
+
+    Dialog dialog;
+    Button btnCalcular, btnCalcCancelar;
+    FloatingActionButton btnAbrirDialBoxCalc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +69,55 @@ public class IMC_EL extends AppCompatActivity {
 //                return true;
 //            }
 //        });
+        //CODIGO CAIXA DE DIALOGO CALCULADORA
+        dialog = new Dialog(IMC_EL.this);
+        dialog.setContentView(R.layout.caixa_diag_calculadora);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
+        dialog.setCancelable(false);
+
+        btnCalcular = dialog.findViewById(R.id.btnCalcular);
+        btnCalcCancelar = dialog.findViewById(R.id.btnCalcCancelar);
+
+        //botao flutuante pra abrir a caixa de dial
+        ImageView btnCalc = findViewById(R.id.btnCalcI);
+//        btnAbrirDialBoxCalc = dialog.findViewById(R.id.btnAbrirDialBoxCalc);
+
+        btnCalcCancelar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                //faz a caixa de diag sumir
+            }
+        });
+
+        btnCalcular.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //temq fazer o codigo da conta q faz o IMC
+                dialog.dismiss();
+            }
+        });
+
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
+//        btnAbrirDialBoxCalc.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                //dialog.show();
+//                Toast toast = Toast.makeText(v.getContext(), "err", Toast.LENGTH_SHORT);
+//                toast.show();
+//            }
+//        });
+
+
     }
+
 
     private void createCollection() {
         LinkedList<String[]> lista = new LinkedList<>();
@@ -101,5 +163,7 @@ public class IMC_EL extends AppCompatActivity {
             groupList.add("Medida " + (i + 1));
         }
     }
+
+
 
 }
