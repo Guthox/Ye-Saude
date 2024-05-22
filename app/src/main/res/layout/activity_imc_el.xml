@@ -37,15 +37,6 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ExpandableListView
-        android:id="@+id/listaDatas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/corfundoTitulo"
-        tools:layout_editor_absoluteX="0dp" >
-
-    </ExpandableListView>
-
     <TextView
         android:id="@+id/Titulo"
         android:layout_width="333dp"
@@ -64,9 +55,21 @@
         android:id="@+id/btnCalcI"
         android:layout_width="79dp"
         android:layout_height="62dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/mais" />
+
+    <ExpandableListView
+        android:id="@+id/listaDatas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/corfundoTitulo"
+        tools:layout_editor_absoluteX="0dp">
+
+    </ExpandableListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

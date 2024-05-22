@@ -1,8 +1,13 @@
 package com.example.yesaude;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TelaMedicamentos extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +40,19 @@ public class TelaMedicamentos extends AppCompatActivity {
         itens.add(new ListaDeMedicamentos("Bromazepam", "7:00"));
         itens.add(new ListaDeMedicamentos("Ibuprofeno", "13:00"));
         itens.add(new ListaDeMedicamentos("Rivotril", "21:00"));
+        itens.add(new ListaDeMedicamentos("Mercaptobenzotiazol", "22:30"));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new AdapterListaMed(getApplicationContext(), itens));
+        for (ListaDeMedicamentos item : itens) {
+            String nomeMedicamento = item.getMeds();
+            if (nomeMedicamento.length() > 11) {
+                // Ajustando a string se exceder 11 caracteres
+                nomeMedicamento = nomeMedicamento.substring(0, 11) + "...";
+                item.setMeds(nomeMedicamento);
+            }
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(new AdapterListaMed(getApplicationContext(), itens));
+        }
     }
 }
 

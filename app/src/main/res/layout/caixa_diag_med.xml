@@ -12,18 +12,18 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textCalcularIMC"
+            android:id="@+id/textAddMed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Calcular o IMC"
+            android:text="Adicionar Medicamento"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/LinearLayoutInputs"
+            android:id="@+id/LinearLayoutInputs2"
             android:layout_width="wrap_content"
             android:layout_height="49dp"
             android:orientation="horizontal"
@@ -31,20 +31,19 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
-            app:layout_constraintBottom_toTopOf="@+id/LinearLayoutBotoes"
+            app:layout_constraintBottom_toTopOf="@+id/LinearLayoutBotoes2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.478"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textCalcularIMC"
+            app:layout_constraintTop_toBottomOf="@+id/textAddMed"
             app:layout_constraintVertical_bias="0.041">
 
             <EditText
-                android:id="@+id/inputPeso"
-                android:hint="Seu Peso"
+                android:id="@+id/inputMed"
+                android:hint="Med."
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="604dp"
-                android:inputType="number"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,8 +51,8 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/inputAltura"
-                android:hint="Sua Altura"
+                android:id="@+id/inputHora"
+                android:hint="Horário"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="604dp"
@@ -67,7 +66,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/LinearLayoutBotoes"
+            android:id="@+id/LinearLayoutBotoes2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -78,7 +77,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCalcCancelar"
+                android:id="@+id/btnMedCancelar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
@@ -94,14 +93,14 @@
             </com.google.android.material.button.MaterialButton>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCalcular"
+                android:id="@+id/btnAddMed"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
-                android:text="Calcular"
+                android:text="Adicionar"
                 android:textColor="#729487"
                 android:textSize="12sp"
                 app:strokeColor="#729487"
