@@ -34,8 +34,15 @@ public class Menu extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
 
+        TextView textView = findViewById(R.id.nomeUsuario);
+        BancoDeDados bd = new BancoDeDados(this);
+        textView.setText(bd.getNome(Info.getUsername()));
+        if (textView.getText().toString().isEmpty()){
+            textView.setText("-----");
+        }
         // Coloca os ultimos valores no menu principal.
         informarIMC();
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

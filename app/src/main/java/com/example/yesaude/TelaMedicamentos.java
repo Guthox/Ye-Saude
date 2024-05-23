@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class TelaMedicamentos extends AppCompatActivity {
 
@@ -37,10 +38,18 @@ public class TelaMedicamentos extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.lista);
 
         List<ListaDeMedicamentos> itens = new ArrayList<ListaDeMedicamentos>();
-        itens.add(new ListaDeMedicamentos("Bromazepam", "7:00"));
-        itens.add(new ListaDeMedicamentos("Ibuprofeno", "13:00"));
-        itens.add(new ListaDeMedicamentos("Rivotril", "21:00"));
-        itens.add(new ListaDeMedicamentos("Mercaptobenzotiazol", "22:30"));
+        BancoMedicar bd = new BancoMedicar(this);
+        bd.inserir(Info.getUsername(), "medicamento", "hora");
+        bd.inserir(Info.getUsername(), "medicamento2", "hora2");
+        String dados = bd.pegarDados(Info.getUsername());
+        Scanner sc = new Scanner(dados);
+        while (sc.hasNextLine()){
+            String linha = sc.nextLine();
+            Scanner scItem = new Scanner(linha);
+            scItem.useDelimiter(",");
+            itens.add(new ListaDeMedicamentos(scItem.next(), scItem.next()));
+        }
+        sc.close();
 
         for (ListaDeMedicamentos item : itens) {
             String nomeMedicamento = item.getMeds();

@@ -19,7 +19,7 @@ public class Medicamentos extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table usuarios (id INTEGER primary key AUTOINCREMENT, farmaco TEXT, detentor TEXT, medicamento TEXT, registro TEXT, concentracao TEXT, forma TEXT, data TEXT)");
+        db.execSQL("create table medicamentos (id INTEGER primary key AUTOINCREMENT, farmaco TEXT, detentor TEXT, medicamento TEXT, registro TEXT, concentracao TEXT, forma TEXT, data TEXT)");
     }
 
     @Override

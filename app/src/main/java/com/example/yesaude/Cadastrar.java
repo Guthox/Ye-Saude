@@ -56,7 +56,9 @@ public class Cadastrar extends AppCompatActivity {
                 String usuario = edit.getText().toString();
                 edit = findViewById(R.id.senha);
                 String senha = edit.getText().toString();
-                bd.inserir(usuario, senha);
+                edit = findViewById(R.id.nome);
+                String nome = edit.getText().toString();
+                bd.inserir(usuario, nome, senha);
                 Intent intent = new Intent(Cadastrar.this, MainActivity.class);
                 startActivity(intent);
             }
