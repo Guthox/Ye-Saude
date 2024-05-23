@@ -1,5 +1,6 @@
 package com.example.yesaude;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
@@ -7,15 +8,22 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +37,7 @@ public class IMC_EL extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     BancoIMC imc = new BancoIMC(this);
+    Activity atividade;
 
     //Dialogbox calculadora variaveis
 
@@ -41,6 +50,8 @@ public class IMC_EL extends AppCompatActivity {
         setContentView(R.layout.activity_imc_el);
         createGroupList();
         createCollection();
+
+        atividade = this;
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -94,7 +105,27 @@ public class IMC_EL extends AppCompatActivity {
         btnCalcular.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //temq fazer o codigo da conta q faz o IMC
+                EditText peso = dialog.findViewById(R.id.inputPeso);
+                EditText altura = dialog.findViewById(R.id.inputAltura);
+                double pesoD;
+                double alturaD;
+                try {
+                    pesoD = Double.parseDouble(peso.getText().toString());
+                    alturaD = Double.parseDouble(altura.getText().toString());
+                    double imc = pesoD / (alturaD * alturaD);
+                    imc = Math.round(imc * 10.0) / 10.0; // 1 casa decimal
+                    BancoIMC bdImc = new BancoIMC(v.getContext());
+                    Format fo = new SimpleDateFormat("dd-MM-yyyy");
+                    Date data = Calendar.getInstance().getTime();
+                    bdImc.inserir(Info.getUsername(), alturaD, pesoD, imc, fo.format(data));
+                    Toast toast = Toast.makeText(v.getContext(), "IMC adicionado", Toast.LENGTH_SHORT);
+                    toast.show();
+                    atividade.recreate();
+                }
+                catch (NumberFormatException e){
+                    Toast toast = Toast.makeText(v.getContext(), "Valores inválidos", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 dialog.dismiss();
             }
         });
@@ -106,14 +137,6 @@ public class IMC_EL extends AppCompatActivity {
             }
         });
 
-//        btnAbrirDialBoxCalc.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                //dialog.show();
-//                Toast toast = Toast.makeText(v.getContext(), "err", Toast.LENGTH_SHORT);
-//                toast.show();
-//            }
-//        });
 
 
     }
@@ -124,6 +147,8 @@ public class IMC_EL extends AppCompatActivity {
         String medidas = imc.pegarDados(Info.getUsername());
         Scanner sc = new Scanner(medidas);
         int indice = 0;
+        double valorImc;
+        String info;
         while (sc.hasNextLine()){
             String linha = sc.nextLine();
             Scanner scItem = new Scanner(linha);
@@ -132,7 +157,8 @@ public class IMC_EL extends AppCompatActivity {
             item[0] = "ID: " + scItem.next();
             item[1] = "Altura: " + scItem.next();
             item[2] = "Peso: " + scItem.next();
-            item[3] = "IMC: " + scItem.next();
+            valorImc = Double.parseDouble(scItem.next());
+            item[3] = "IMC: " + valorImc + " - " + Info.grauIMC(valorImc);
             item[4] = "Dia: " + scItem.next();
             lista.add(item);
         }

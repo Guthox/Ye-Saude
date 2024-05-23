@@ -40,11 +40,11 @@
 
             <EditText
                 android:id="@+id/inputPeso"
-                android:hint="Seu Peso"
+                android:hint="Seu Peso (kg)"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="604dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,11 +53,11 @@
 
             <EditText
                 android:id="@+id/inputAltura"
-                android:hint="Sua Altura"
+                android:hint="Sua Altura (m)"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="604dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

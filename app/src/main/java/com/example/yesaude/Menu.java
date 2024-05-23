@@ -73,8 +73,7 @@ public class Menu extends AppCompatActivity {
         });
 
         // #########################################################################################
-        BancoIMC imc = new BancoIMC(this);
-        imc.inserir(Info.getUsername(), 33, 33, 33, "333");
+
 
     }
     @Override
@@ -107,21 +106,7 @@ public class Menu extends AppCompatActivity {
             double grau;
             try{
                 grau = Double.parseDouble(imc.getText().toString());
-                if (grau < 18.5){
-                    texto = "Abaixo do peso";
-                }
-                else if (grau <= 24.9){
-                    texto = "Peso ideal";
-                }
-                else if (grau <= 34.9){
-                    texto = "Obesidade I";
-                }
-                else if (grau <= 39.9){
-                    texto = "Obesidade II";
-                }
-                else{
-                    texto = "Obesidade III";
-                }
+                texto = Info.grauIMC(grau);
             }
             catch (Exception e){
                 texto = "---";

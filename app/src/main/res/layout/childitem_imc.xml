@@ -12,9 +12,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Hello"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="16dp" />
 
     <ImageView
         android:layout_width="wrap_content"
