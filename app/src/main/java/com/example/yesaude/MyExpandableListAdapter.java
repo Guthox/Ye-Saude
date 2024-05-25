@@ -98,6 +98,10 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                             BancoPressao bd = new BancoPressao(v.getContext());
                             bd.remover(Info.getIdEscolhido());
                         }
+                        else if (atividade.getClass() == TelaGlicose.class){
+                            BancoGlicose bd = new BancoGlicose(v.getContext());
+                            bd.remover(Info.getIdEscolhido());
+                        }
                         notifyDataSetChanged();
                         expandableListView.collapseGroup(i);
                         atividade.recreate();

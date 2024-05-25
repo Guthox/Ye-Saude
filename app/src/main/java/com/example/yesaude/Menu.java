@@ -43,6 +43,7 @@ public class Menu extends AppCompatActivity {
         // Coloca os ultimos valores no menu principal.
         informarIMC();
         informarPressao();
+        informarGlicose();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -79,6 +80,16 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnGlicose = findViewById(R.id.buttonGlicose);
+        btnGlicose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, TelaGlicose.class);
+                startActivity(intent);
+            }
+        });
+
         Button btnImc2 = findViewById(R.id.btnImc2);
         btnImc2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +108,7 @@ public class Menu extends AppCompatActivity {
         super.onResume();
         informarIMC();
         informarPressao();
+        informarGlicose();
     }
 
 
@@ -112,6 +124,22 @@ public class Menu extends AppCompatActivity {
         }
         else{
             desc.setText(Info.grauPressao(dados));
+        }
+    }
+
+    private void informarGlicose(){
+        TextView glicose = findViewById(R.id.caixa2Cima);
+        TextView desc = findViewById(R.id.caixa2Baixo);
+
+        BancoGlicose bd = new BancoGlicose(this);
+        String dados = bd.ultimaMedida(Info.getUsername());
+        glicose.setText(dados + " mg/dl");
+        if (dados.equals("---")){
+            glicose.setText("---");
+            desc.setText("---");
+        }
+        else{
+            desc.setText(Info.grauGlicose(dados));
         }
     }
     // Coloca os valores de peso, altura e imc no menu princiapal

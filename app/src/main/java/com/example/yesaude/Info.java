@@ -19,6 +19,10 @@ public class Info {
         return "TODO";
     }
 
+    public static String grauGlicose(String glicose){
+        return "TODO";
+    }
+
     public static String grauIMC(double grau){
         String texto;
         if (grau < 18.5){
