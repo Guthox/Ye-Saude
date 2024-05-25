@@ -15,6 +15,10 @@ public class Info {
     public  static int getIdEscolhido() {return idEscolhido;}
     public  static void setIdEscolhido(int id){idEscolhido = id;}
 
+    public static String grauPressao(String pressao){
+        return "TODO";
+    }
+
     public static String grauIMC(double grau){
         String texto;
         if (grau < 18.5){

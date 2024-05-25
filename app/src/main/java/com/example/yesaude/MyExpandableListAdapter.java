@@ -90,8 +90,14 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
-                        BancoIMC imc = new BancoIMC(v.getContext());
-                        imc.remover(Info.getIdEscolhido());
+                        if (atividade.getClass() == IMC_EL.class){
+                            BancoIMC imc = new BancoIMC(v.getContext());
+                            imc.remover(Info.getIdEscolhido());
+                        }
+                        else if(atividade.getClass() == TelaPressao.class){
+                            BancoPressao bd = new BancoPressao(v.getContext());
+                            bd.remover(Info.getIdEscolhido());
+                        }
                         notifyDataSetChanged();
                         expandableListView.collapseGroup(i);
                         atividade.recreate();

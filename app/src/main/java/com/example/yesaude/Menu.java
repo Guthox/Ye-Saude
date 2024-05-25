@@ -42,7 +42,7 @@ public class Menu extends AppCompatActivity {
         }
         // Coloca os ultimos valores no menu principal.
         informarIMC();
-
+        informarPressao();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -57,6 +57,15 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Menu.this, TelaMedicamentos.class);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonPressao = findViewById(R.id.buttonPressao);
+        buttonPressao.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(Menu.this, TelaPressao.class);
                 startActivity(intent);
             }
         });
@@ -87,8 +96,24 @@ public class Menu extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         informarIMC();
+        informarPressao();
     }
 
+
+    private void informarPressao(){
+        TextView pressao = findViewById(R.id.caixa1Cima);
+        TextView desc = findViewById(R.id.caixa1Baixo);
+
+        BancoPressao bd = new BancoPressao(this);
+        String dados = bd.ultimaMedida(Info.getUsername());
+        pressao.setText(dados);
+        if (dados.equals("---")){
+            desc.setText("---");
+        }
+        else{
+            desc.setText(Info.grauPressao(dados));
+        }
+    }
     // Coloca os valores de peso, altura e imc no menu princiapal
     // Coloca --- se não tiver nenhuma medida
     private void informarIMC(){

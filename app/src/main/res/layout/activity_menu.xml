@@ -175,18 +175,16 @@
         android:id="@+id/caixa1Cima"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:gravity="center"
-        android:text="150x100"
-        android:textColor="@color/black"
         android:background="@drawable/caixa"
+        android:gravity="center"
+        android:text="---"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.612" />
-
-
 
 
     <TextView
@@ -196,7 +194,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/caixa_baixo"
         android:gravity="center"
-        android:text="Alta"
+        android:text="---"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -328,6 +326,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.954" />
+
+    <Button
+        android:id="@+id/buttonPressao"
+        android:layout_width="152dp"
+        android:layout_height="80dp"
+        android:background="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
