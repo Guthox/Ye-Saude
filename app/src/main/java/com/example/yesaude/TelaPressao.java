@@ -112,7 +112,7 @@ public class TelaPressao extends AppCompatActivity {
                 try {
                     minimo = Integer.parseInt(minimoET.getText().toString());
                     maximo = Integer.parseInt(maximoET.getText().toString());
-                    String pressao = "" + minimo + "x" + "" + maximo;
+                    String pressao = "" + maximo + "x" + "" + minimo;
                     Format fo = new SimpleDateFormat("dd-MM-yyyy");
                     Date data = Calendar.getInstance().getTime();
                     bdPressao.inserir(Info.getUsername(), pressao, fo.format(data));

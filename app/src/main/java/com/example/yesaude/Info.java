@@ -16,7 +16,21 @@ public class Info {
     public  static void setIdEscolhido(int id){idEscolhido = id;}
 
     public static String grauPressao(String pressao){
-        return "TODO";
+        String texto;
+        int min = 0;
+        int max = 0;
+        min = Integer.parseInt(pressao.substring(0, pressao.indexOf('x')));
+        max = Integer.parseInt(pressao.substring(pressao.indexOf('x')+1));
+        if(min <= 60 || max <= 100){
+            texto = "Sua pressão está baixa!";
+        }
+        else if(min >= 95 || max >= 130){
+            texto = "Sua pressão está alta";
+        }
+        else{
+            texto = "Sua pressão está boa!";
+        }
+        return texto;
     }
 
     public static String grauGlicose(String glicose){
