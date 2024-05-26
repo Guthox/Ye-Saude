@@ -35,7 +35,18 @@ public class Info {
 
     public static String grauGlicose(String glicose){
         String texto;
-        return "TODO";
+        int glicemia = 0;
+        glicemia = Integer.parseInt(glicose);
+        if(glicemia < 70){
+            texto = "Sua glicemia está baixa!";
+        }
+        else if(glicemia > 100){
+            texto = "Sua glicemia está alta!";
+        }
+        else{
+            texto = "Sua glicemia está boa";
+        }
+        return texto;
     }
 
     public static String grauIMC(double grau){
