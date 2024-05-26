@@ -34,6 +34,7 @@ public class Info {
     }
 
     public static String grauGlicose(String glicose){
+        String texto;
         return "TODO";
     }
 
