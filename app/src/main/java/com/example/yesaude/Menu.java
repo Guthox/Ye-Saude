@@ -62,6 +62,24 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        Button buttonExames = findViewById(R.id.buttonExames);
+        buttonExames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, TelaExames.class);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonConsultas = findViewById(R.id.buttonConsultas);
+        buttonConsultas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, TelaConsulta.class);
+                startActivity(intent);
+            }
+        });
+
         Button buttonPressao = findViewById(R.id.buttonPressao);
         buttonPressao.setOnClickListener(new View.OnClickListener(){
             @Override
