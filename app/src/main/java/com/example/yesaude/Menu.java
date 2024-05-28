@@ -118,7 +118,7 @@ public class Menu extends AppCompatActivity {
 
         BancoPressao bd = new BancoPressao(this);
         String dados = bd.ultimaMedida(Info.getUsername());
-        pressao.setText(dados);
+        pressao.setText(dados + " mmHg");
         if (dados.equals("---")){
             desc.setText("---");
         }

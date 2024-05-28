@@ -83,20 +83,20 @@ public class BancoPressao extends SQLiteOpenHelper {
     public String ultimaMedida(String user){
         if (contarTuplas(user) == 0) return "---";
         SQLiteDatabase db = this.getReadableDatabase();
-        StringBuilder dados = new StringBuilder();
+        String dados = "";
 
-        Cursor cursor = db.rawQuery("SELECT user, pressao FROM Pressaobd WHERE user = ? ORDER BY ID DESC LIMIT 1", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT * FROM Pressaobd WHERE user = ? ORDER BY ID DESC LIMIT 1", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             int pressaoIndex = cursor.getColumnIndex("pressao");
 
             if (pressaoIndex != -1) {
                 String pressao = cursor.getString(pressaoIndex);
-                dados.append(pressao);
+                dados = pressao;
             }
             cursor.close();
         }
-        return dados.toString();
+        return dados;
     }
 
     // Deleta dado do banco

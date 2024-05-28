@@ -43,7 +43,8 @@ public class TelaPressao extends AppCompatActivity {
 
     Dialog dialog;
     Button btnCalcular, btnCalcCancelar;
-    FloatingActionButton btnAbrirDialBoxCalc;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,7 @@ public class TelaPressao extends AppCompatActivity {
 //        });
         //CODIGO CAIXA DE DIALOGO CALCULADORA
         dialog = new Dialog(TelaPressao.this);
-        dialog.setContentView(R.layout.caixa_diag_calculadora);
+        dialog.setContentView(R.layout.caixa_diag_pressao);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
         dialog.setCancelable(false);
@@ -105,14 +106,14 @@ public class TelaPressao extends AppCompatActivity {
         btnCalcular.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                EditText minimoET = dialog.findViewById(R.id.inputPeso);
-                EditText maximoET = dialog.findViewById(R.id.inputAltura);
+                EditText minimoET = dialog.findViewById(R.id.inputPressaoMin);
+                EditText maximoET = dialog.findViewById(R.id.inputPressaoMax);
                 int minimo;
                 int maximo;
                 try {
                     minimo = Integer.parseInt(minimoET.getText().toString());
                     maximo = Integer.parseInt(maximoET.getText().toString());
-                    String pressao = "" + maximo + "x" + "" + minimo + " mmHg";
+                    String pressao = "" + maximo + "x" + "" + minimo;
                     Format fo = new SimpleDateFormat("dd-MM-yyyy");
                     Date data = Calendar.getInstance().getTime();
                     bdPressao.inserir(Info.getUsername(), pressao, fo.format(data));
@@ -152,7 +153,7 @@ public class TelaPressao extends AppCompatActivity {
             scItem.useDelimiter(",");
             String[] item = new String[3];
             item[0] = "ID: " + scItem.next();
-            item[1] = "Pressão: " + scItem.next();
+            item[1] = "Pressão: " + scItem.next() + " mmHg";
             item[2] = "Dia: " + scItem.next();
             lista.add(item);
         }

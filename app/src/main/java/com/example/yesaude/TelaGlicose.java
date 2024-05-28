@@ -82,7 +82,7 @@ public class TelaGlicose extends AppCompatActivity {
 //        });
         //CODIGO CAIXA DE DIALOGO CALCULADORA
         dialog = new Dialog(TelaGlicose.this);
-        dialog.setContentView(R.layout.caixa_diag_calculadora);
+        dialog.setContentView(R.layout.caixa_diag_glicemia);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
         dialog.setCancelable(false);
@@ -105,7 +105,7 @@ public class TelaGlicose extends AppCompatActivity {
         btnCalcular.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                EditText glicoseET = dialog.findViewById(R.id.inputPeso);
+                EditText glicoseET = dialog.findViewById(R.id.inputGlicemia);
                 int glicose;
                 try {
                     glicose = Integer.parseInt(glicoseET.getText().toString());
@@ -148,7 +148,7 @@ public class TelaGlicose extends AppCompatActivity {
             scItem.useDelimiter(",");
             String[] item = new String[3];
             item[0] = "ID: " + scItem.next();
-            item[1] = "Glicose: " + scItem.next();
+            item[1] = "Glicose: " + scItem.next() + " mg/dl";
             item[2] = "Dia: " + scItem.next();
             lista.add(item);
         }

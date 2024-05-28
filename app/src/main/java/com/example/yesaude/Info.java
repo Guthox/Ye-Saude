@@ -22,13 +22,13 @@ public class Info {
         min = Integer.parseInt(pressao.substring(0, pressao.indexOf('x')));
         max = Integer.parseInt(pressao.substring(pressao.indexOf('x')+1));
         if(min <= 60 || max <= 100){
-            texto = "Sua pressão está baixa!";
+            texto = "Pressão baixa";
         }
         else if(min >= 95 || max >= 130){
-            texto = "Sua pressão está alta";
+            texto = "Pressão alta";
         }
         else{
-            texto = "Sua pressão está boa!";
+            texto = "Pressão normal";
         }
         return texto;
     }
