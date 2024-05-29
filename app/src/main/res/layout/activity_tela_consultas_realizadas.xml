@@ -56,7 +56,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/corfundoTitulo"
@@ -148,11 +149,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:weightSum="1"
-                android:id="@+id/Linear3">
+                android:weightSum="1">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -175,8 +176,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2.5dp"
-                    android:layout_weight="0.5"
                     android:layout_marginBottom="15dp"
+                    android:layout_weight="0.5"
                     android:gravity="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
@@ -192,11 +193,11 @@
                 android:id="@+id/Divisao1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Resumo da Consulta"
-                android:gravity="center"
-                android:textColor="@color/black"
                 android:background="@drawable/background_imc"
+                android:gravity="center"
+                android:text="Resumo da Consulta"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -205,8 +206,169 @@
                 app:layout_constraintTop_toBottomOf="@+id/Linear3"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <EditText
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="left"
+                android:layout_weight="0.5"
+                android:minHeight="200dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:hint="Digite aqui:"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="277dp" />
+
+            <LinearLayout
+                android:id="@+id/Linear4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_weight="0.5"
+                    android:background="#D9D9D9"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Retorno em:"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    tools:layout_editor_absoluteX="40dp"
+                    tools:layout_editor_absoluteY="277dp" />
+
+                <EditText
+                    android:id="@+id/textView11"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:hint="---------"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    tools:layout_editor_absoluteX="40dp"
+                    tools:layout_editor_absoluteY="277dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Linear5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_weight="0.5"
+                    android:background="#D9D9D9"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Lembrete para agendamento:"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    tools:layout_editor_absoluteX="40dp"
+                    tools:layout_editor_absoluteY="277dp" />
+
+                <EditText
+                    android:id="@+id/textView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:hint="---------"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    tools:layout_editor_absoluteX="40dp"
+                    tools:layout_editor_absoluteY="277dp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:background="#729487"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/Salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="7dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Salvar"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/footer"
+        app:layout_constraintEnd_toEndOf="@+id/footer"
+        app:layout_constraintStart_toStartOf="@+id/footer"
+        app:layout_constraintTop_toTopOf="@+id/footer" />
+
+    <TextView
+        android:id="@+id/cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="277dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+
+        android:padding="10dp"
+        android:text="Cancelar"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/footer"
+        app:layout_constraintEnd_toEndOf="@+id/footer"
+        app:layout_constraintStart_toStartOf="@+id/footer"
+        app:layout_constraintTop_toTopOf="@+id/footer" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="56dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="178dp"
+        android:layout_marginEnd="178dp"
+        app:layout_constraintBottom_toBottomOf="@+id/footer"
+        app:layout_constraintEnd_toEndOf="@+id/footer"
+        app:layout_constraintStart_toStartOf="@+id/footer"
+        app:layout_constraintTop_toTopOf="@+id/footer"
+        app:srcCompat="@drawable/pasta" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
