@@ -91,8 +91,8 @@
                     tools:layout_editor_absoluteX="40dp"
                     tools:layout_editor_absoluteY="277dp" />
 
-                <TextView
-                    android:id="@+id/textView4"
+                <EditText
+                    android:id="@+id/txEspecialidade"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2.5dp"
@@ -100,7 +100,7 @@
                     android:gravity="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="---------"
+                    android:hint="---------"
                     android:textColor="@color/black"
                     android:textSize="25dp"
                     tools:layout_editor_absoluteX="40dp"
@@ -131,8 +131,8 @@
                     tools:layout_editor_absoluteX="40dp"
                     tools:layout_editor_absoluteY="277dp" />
 
-                <TextView
-                    android:id="@+id/textView6"
+                <EditText
+                    android:id="@+id/txData"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2.5dp"
@@ -140,7 +140,7 @@
                     android:gravity="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="--/--/----"
+                    android:hint="--/--/----"
                     android:textColor="@color/black"
                     android:textSize="25dp"
                     tools:layout_editor_absoluteX="40dp"
@@ -171,8 +171,8 @@
                     tools:layout_editor_absoluteX="40dp"
                     tools:layout_editor_absoluteY="277dp" />
 
-                <TextView
-                    android:id="@+id/textView8"
+                <EditText
+                    android:id="@+id/txHora"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2.5dp"
@@ -181,7 +181,7 @@
                     android:gravity="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="--:--"
+                    android:hint="---------"
                     android:textColor="@color/black"
                     android:textSize="25dp"
                     tools:layout_editor_absoluteX="40dp"
@@ -207,7 +207,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <EditText
-                android:id="@+id/textView9"
+                android:id="@+id/txResumo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -248,7 +248,7 @@
                     tools:layout_editor_absoluteY="277dp" />
 
                 <EditText
-                    android:id="@+id/textView11"
+                    android:id="@+id/txRetorno"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2.5dp"
@@ -360,7 +360,7 @@
         app:layout_constraintTop_toTopOf="@+id/footer" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/btnSalvarFoto"
         android:layout_width="56dp"
         android:layout_height="51dp"
         android:layout_marginStart="178dp"

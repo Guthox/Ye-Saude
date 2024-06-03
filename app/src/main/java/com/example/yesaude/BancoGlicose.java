@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class BancoGlicose extends SQLiteOpenHelper {
-    // Exemplo de uso
 
     public static final String databaseName = "Glicoses.db";
 

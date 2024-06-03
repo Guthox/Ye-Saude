@@ -1,7 +1,10 @@
 package com.example.yesaude;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ public class TelaExames extends AppCompatActivity {
     Map<String, List<String>> childColecao;
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
+    Activity atividade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,14 @@ public class TelaExames extends AppCompatActivity {
         setContentView(R.layout.activity_tela_exames);
         createGroupList();
         createCollection();
+
+        atividade = this;
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
+
         expandableListView = findViewById(R.id.listaDatas);
         expandableListAdapter = new MyExpandableListAdapter(this, groupList, childColecao, expandableListView, this);
         expandableListView.setAdapter(expandableListAdapter);
