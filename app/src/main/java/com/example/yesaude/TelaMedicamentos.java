@@ -1,5 +1,6 @@
 package com.example.yesaude;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +8,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +21,18 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class TelaMedicamentos extends AppCompatActivity {
 
+    Activity atividade;
+    Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +48,6 @@ public class TelaMedicamentos extends AppCompatActivity {
 
         List<ListaDeMedicamentos> itens = new ArrayList<ListaDeMedicamentos>();
         BancoMedicar bd = new BancoMedicar(this);
-        bd.inserir(Info.getUsername(), "medicamento", "hora");
-        bd.inserir(Info.getUsername(), "medicamento2", "hora2");
         String dados = bd.pegarDados(Info.getUsername());
         Scanner sc = new Scanner(dados);
         while (sc.hasNextLine()){
@@ -62,6 +69,63 @@ public class TelaMedicamentos extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(new AdapterListaMed(getApplicationContext(), itens));
         }
+
+        //CODIGO CAIXA DE DIALOGO CALCULADORA
+        dialog = new Dialog(TelaMedicamentos.this);
+        dialog.setContentView(R.layout.caixa_diag_med);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
+        dialog.setCancelable(false);
+
+        Button btnCalcCancelar = dialog.findViewById(R.id.btnMedCancelar);
+        btnCalcCancelar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                //faz a caixa de diag sumir
+            }
+        });
+
+        atividade = this;
+
+        Button btnCalcAceitar = dialog.findViewById(R.id.btnAddMed);
+        btnCalcAceitar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                EditText med = dialog.findViewById(R.id.inputMed);
+                EditText hora = dialog.findViewById(R.id.inputHora);
+                String medStr;
+                String horaStr;
+                try {
+                    medStr = med.getText().toString();
+                    horaStr = hora.getText().toString();
+                    BancoMedicar bd = new BancoMedicar(v.getContext());
+                    bd.inserir(Info.getUsername(), medStr, horaStr);
+                    Toast toast = Toast.makeText(v.getContext(), "Remédio adicionado", Toast.LENGTH_SHORT);
+                    toast.show();
+                    atividade.recreate();
+                }
+                catch (NumberFormatException e){
+                    Toast toast = Toast.makeText(v.getContext(), "Valores inválidos", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        ImageView btnMed = findViewById(R.id.btnMed);
+        btnMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
     }
+
+
+
+    //bd.inserir(Info.getUsername(), "medicamento", "hora");
+
 }
 
