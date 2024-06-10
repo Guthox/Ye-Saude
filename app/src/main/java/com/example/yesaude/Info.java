@@ -1,10 +1,13 @@
 package com.example.yesaude;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -91,6 +94,28 @@ public class Info {
         snackbar.getView().setLayoutParams(params);
 
         snackbar.show();
+    }
+
+    public static void toastCerto(Context context, String mensagem){
+        showCustomToast(context, mensagem, "#0CFF00");
+    }
+
+    public static void toastErro(Context context, String mensagem){
+        showCustomToast(context, mensagem, "#FF5E5E");
+    }
+
+    private static void showCustomToast(Context context, String message, String cor) {
+        View layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, (ViewGroup) null);
+
+        TextView textToast = layout.findViewById(R.id.text_toast);
+        textToast.setText(message);
+        textToast.setBackgroundColor(Color.parseColor(cor));
+
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+
+        toast.show();
     }
 
     public static void mensagemErro(View v, String mensagem){

@@ -112,13 +112,11 @@ public class TelaGlicose extends AppCompatActivity {
                     Format fo = new SimpleDateFormat("dd-MM-yyyy");
                     Date data = Calendar.getInstance().getTime();
                     bd.inserir(Info.getUsername(), glicose, fo.format(data));
-                    Toast toast = Toast.makeText(v.getContext(), "Medida adicionado", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastCerto(v.getContext(), "Glicose adicionada");
                     atividade.recreate();
                 }
                 catch (NumberFormatException e){
-                    Toast toast = Toast.makeText(v.getContext(), "Valores inválidos", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastErro(v.getContext(), "Valor inválido");
                 }
                 dialog.dismiss();
             }

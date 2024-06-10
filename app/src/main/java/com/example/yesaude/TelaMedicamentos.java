@@ -90,15 +90,18 @@ public class TelaMedicamentos extends AppCompatActivity {
                 try {
                     medStr = med.getText().toString();
                     horaStr = hora.getText().toString();
-                    BancoMedicar bd = new BancoMedicar(v.getContext());
-                    bd.inserir(Info.getUsername(), medStr, horaStr);
-                    Toast toast = Toast.makeText(v.getContext(), "Remédio adicionado", Toast.LENGTH_SHORT);
-                    toast.show();
-                    atividade.recreate();
+                    if (medStr.isEmpty() || horaStr.isEmpty()){
+                        Info.toastErro(v.getContext(), "Valores inválidos");
+                    }
+                    else{
+                        BancoMedicar bd = new BancoMedicar(v.getContext());
+                        bd.inserir(Info.getUsername(), medStr, horaStr);
+                        Info.toastCerto(v.getContext(), "Remédio adicionado");
+                        atividade.recreate();
+                    }
                 }
                 catch (NumberFormatException e){
-                    Toast toast = Toast.makeText(v.getContext(), "Valores inválidos", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastErro(v.getContext(), "Valores inválidos");
                 }
                 dialog.dismiss();
             }

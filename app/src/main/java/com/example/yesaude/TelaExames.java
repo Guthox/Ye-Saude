@@ -89,12 +89,10 @@ public class TelaExames extends AppCompatActivity {
                     public void onActivityResult(Uri result) {
                         if (result != null) {
                             imagem = result;
-                            Toast toast = Toast.makeText(atividade, "Imagem selecionada", Toast.LENGTH_SHORT);
-                            toast.show();
+                            Info.toastCerto(atividade, "Imagem selecionada");
                         }
                         else{
-                            Toast toast = Toast.makeText(atividade, "Nenhuma imagem selecionada", Toast.LENGTH_SHORT);
-                            toast.show();
+                            Info.toastErro(atividade, "Nenhuma imagem selecionada");
                         }
                     }
                 });
@@ -113,14 +111,12 @@ public class TelaExames extends AppCompatActivity {
                     imgStr = imagem.toString();
                 }
                 if (exameStr.isEmpty() || dataStr.isEmpty() || imgStr.isEmpty()){
-                    Toast toast = Toast.makeText(v.getContext(), "Campos inválidos", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastErro(v.getContext(), "Exame, data e imagem não podem ser vazios");
                 }
                 else{
                     BancoExames bd = new BancoExames(v.getContext());
                     bd.inserir(Info.getUsername(), exameStr, dataStr, imgStr);
-                    Toast toast = Toast.makeText(v.getContext(), "Exame adicionado com sucesso", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastCerto(v.getContext(), "Exame adicionado");
                     atividade.recreate();
                 }
                 dialog.dismiss();

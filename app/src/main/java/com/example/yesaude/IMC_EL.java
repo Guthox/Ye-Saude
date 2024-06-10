@@ -117,13 +117,11 @@ public class IMC_EL extends AppCompatActivity {
                     Format fo = new SimpleDateFormat("dd-MM-yyyy");
                     Date data = Calendar.getInstance().getTime();
                     bdImc.inserir(Info.getUsername(), alturaD, pesoD, imc, fo.format(data));
-                    Toast toast = Toast.makeText(v.getContext(), "IMC adicionado", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastCerto(v.getContext(), "IMC adicionado");
                     atividade.recreate();
                 }
                 catch (NumberFormatException e){
-                    Toast toast = Toast.makeText(v.getContext(), "Valores inválidos", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastErro(v.getContext(), "Valores inválidos");
                 }
                 dialog.dismiss();
             }

@@ -117,13 +117,11 @@ public class TelaPressao extends AppCompatActivity {
                     Format fo = new SimpleDateFormat("dd-MM-yyyy");
                     Date data = Calendar.getInstance().getTime();
                     bdPressao.inserir(Info.getUsername(), pressao, fo.format(data));
-                    Toast toast = Toast.makeText(v.getContext(), "Pressao adicionada", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastCerto(v.getContext(), "Pressão adicionada com sucesso.");
                     atividade.recreate();
                 }
                 catch (NumberFormatException e){
-                    Toast toast = Toast.makeText(v.getContext(), "Valores inválidos", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Info.toastErro(v.getContext(), "Valores de pressão inválidos");
                 }
                 dialog.dismiss();
             }
