@@ -3,6 +3,8 @@ package com.example.yesaude;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -114,6 +116,54 @@ public class TelaMedicamentos extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        EditText inputHora = dialog.findViewById(R.id.inputHora);
+        inputHora.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Não é necessário implementar neste caso
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Não é necessário implementar neste caso
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+
+                // Verifica e corrige formato da hora
+                if (text.length() == 3 && text.charAt(2) != ':') {
+                    // Insere ":" se ainda não está presente
+                    text = text.substring(0, 2) + ":" + text.charAt(2);
+                    inputHora.setText(text);
+                    inputHora.setSelection(text.length()); // Move o cursor para o final
+                } else if (text.length() > 5) {
+                    // Limita o tamanho máximo do texto para "hh:mm"
+                    inputHora.setText(text.substring(0, 5));
+                    inputHora.setSelection(5); // Move o cursor para o final
+                }
+
+                // Validação de valores de hora
+                if (text.length() == 5 && text.charAt(2) == ':') {
+                    String[] parts = text.split(":");
+                    try {
+                        int horas = Integer.parseInt(parts[0]);
+                        int minutos = Integer.parseInt(parts[1]);
+                        if (horas > 23 || minutos > 59) {
+                            Info.toastErro(getApplicationContext(), "Valores de hora inválidos");
+                            inputHora.setText(""); // Limpa o campo se inválido
+                        }
+                    } catch (NumberFormatException e) {
+                        // Trata exceção se não for possível converter para int
+                        Info.toastErro(getApplicationContext(), "Formato de hora inválido");
+                        inputHora.setText(""); // Limpa o campo em caso de erro
+                    }
+                }
+            }
+        });
+
 
     }
 

@@ -57,6 +57,7 @@
                 android:layout_height="80dp"
                 android:layout_marginBottom="604dp"
                 android:inputType="number"
+                android:maxLength="5"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

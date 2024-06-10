@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -138,6 +140,92 @@ public class TelaExames extends AppCompatActivity {
                 galleryLauncher.launch("image/*");
             }
         });
+
+        EditText inputData = dialog.findViewById(R.id.inputData);
+        inputData.addTextChangedListener(new TextWatcher() {
+            private boolean ehAnoBissexto(int ano) {
+                return (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
+            }
+            private boolean isDeleting = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                isDeleting = count > after;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Não é necessário implementar neste caso
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isDeleting) {
+                    isDeleting = false;
+                    return;
+                }
+
+                String text = s.toString();
+
+                // Verifica e corrige formato da data
+                if (text.length() == 2 && !text.contains("/")) {
+                    // Insere "/" após o segundo caractere
+                    text = text.substring(0, 2) + "/" + text.substring(2);
+                    inputData.setText(text);
+                    inputData.setSelection(text.length()); // Move o cursor para o final
+                } else if (text.length() == 5 && !text.substring(3, 4).equals("/")) {
+                    // Insere "/" após o quarto caractere
+                    text = text.substring(0, 5) + "/" + text.substring(5);
+                    inputData.setText(text);
+                    inputData.setSelection(text.length()); // Move o cursor para o final
+                } else if (text.length() > 10) {
+                    // Limita o tamanho máximo do texto para "dd/MM/yyyy"
+                    inputData.setText(text.substring(0, 10));
+                    inputData.setSelection(10); // Move o cursor para o final
+                }
+
+                // Validação de valores de data
+                if (text.length() == 10 && text.charAt(2) == '/' && text.charAt(5) == '/') {
+                    String[] parts = text.split("/");
+                    int dia = Integer.parseInt(parts[0]);
+                    int mes = Integer.parseInt(parts[1]);
+                    int ano = Integer.parseInt(parts[2]);
+
+                    boolean dataValida = true;
+
+                    // Validar mês
+                    if (mes < 1 || mes > 12) {
+                        dataValida = false;
+                    }
+
+                    // Validar dias por mês
+                    if (dataValida) {
+                        // Validar meses com 30 dias
+                        if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia < 1 || dia > 30)) {
+                            dataValida = false;
+                        }
+                        // Validar meses com 31 dias
+                        else if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) && (dia < 1 || dia > 31)) {
+                            dataValida = false;
+                        }
+                        // Validar fevereiro em anos não bissextos
+                        else if (mes == 2 && !ehAnoBissexto(ano) && (dia < 1 || dia > 28)) {
+                            dataValida = false;
+                        }
+                        // Validar fevereiro em anos bissextos
+                        else if (mes == 2 && ehAnoBissexto(ano) && (dia < 1 || dia > 29)) {
+                            dataValida = false;
+                        }
+                    }
+
+                    if (!dataValida) {
+                        Info.toastErro(getApplicationContext(), "Valores de data inválidos");
+                        inputData.setText(""); // Limpa o campo se inválido
+                    }
+                }
+            }
+        });
+
 
     }
 
