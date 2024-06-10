@@ -97,19 +97,19 @@ public class Info {
     }
 
     public static void toastCerto(Context context, String mensagem){
-        showCustomToast(context, mensagem, "#0CFF00");
+        showCustomToast(context, mensagem, R.drawable.snackbar_background_certo);
     }
 
     public static void toastErro(Context context, String mensagem){
-        showCustomToast(context, mensagem, "#FF5E5E");
+        showCustomToast(context, mensagem, R.drawable.snackbar_background_erro);
     }
 
-    private static void showCustomToast(Context context, String message, String cor) {
-        View layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, (ViewGroup) null);
+    private static void showCustomToast(Context context, String message, int drawableResId) {
+        View layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null);
 
         TextView textToast = layout.findViewById(R.id.text_toast);
         textToast.setText(message);
-        textToast.setBackgroundColor(Color.parseColor(cor));
+        textToast.setBackgroundResource(drawableResId);
 
         Toast toast = new Toast(context);
         toast.setDuration(Toast.LENGTH_LONG);
@@ -117,6 +117,8 @@ public class Info {
 
         toast.show();
     }
+
+
 
     public static void mensagemErro(View v, String mensagem){
         mensagem(v, mensagem, "#FF5E5E");

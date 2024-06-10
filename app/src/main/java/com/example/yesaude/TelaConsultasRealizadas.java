@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -106,11 +108,121 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
             }
         });
 
+
+
         salvarFotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 galleryLauncher.launch("image/*");
             }
         });
+
+        EditText txData = findViewById(R.id.txData);
+        txData.addTextChangedListener(new TextWatcher() {
+            private boolean isDeleting; // Variável para rastrear se o usuário está deletando
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                isDeleting = count > after; // Verifica se está deletando
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Não é necessário implementar neste caso
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (!isDeleting) {
+                    // Verifica e corrige formato da data durante a inserção
+                    if (text.length() == 2 || text.length() == 5) {
+                        if (text.charAt(text.length() - 1) != '/') {
+                            text += "/";
+                            txData.setText(text);
+                            txData.setSelection(text.length()); // Move o cursor para o final
+                        }
+                    } else if (text.length() > 10) {
+                        // Limita o tamanho máximo do texto para "dd/mm/yyyy"
+                        text = text.substring(0, 10);
+                        txData.setText(text);
+                        txData.setSelection(10); // Move o cursor para o final
+                    }
+                }
+
+                // Validação de valores de data
+                if (text.length() == 10) {
+                    String[] parts = text.split("/");
+                    try {
+                        int dia = Integer.parseInt(parts[0]);
+                        int mes = Integer.parseInt(parts[1]);
+                        int ano = Integer.parseInt(parts[2]);
+                        if (dia > 31 || mes > 12 || ano < 1900 || ano > 2100) {
+                            Info.toastErro(getApplicationContext(), "Valores de data inválidos");
+                            txData.setText(""); // Limpa o campo se inválido
+                        }
+                    } catch (NumberFormatException e) {
+                        // Trata exceção se não for possível converter para int
+                        Info.toastErro(getApplicationContext(), "Formato de data inválido");
+                        txData.setText(""); // Limpa o campo em caso de erro
+                    }
+                }
+            }
+        });
+
+        EditText txHora = findViewById(R.id.txHora);
+        txHora.addTextChangedListener(new TextWatcher() {
+            private boolean isDeleting; // Variável para rastrear se o usuário está deletando
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                isDeleting = count > after; // Verifica se está deletando
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Não é necessário implementar neste caso
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (!isDeleting) {
+                    // Verifica e corrige formato da hora durante a inserção
+                    if (text.length() == 2) {
+                        if (text.charAt(text.length() - 1) != ':') {
+                            text += ":";
+                            txHora.setText(text);
+                            txHora.setSelection(text.length()); // Move o cursor para o final
+                        }
+                    } else if (text.length() > 5) {
+                        // Limita o tamanho máximo do texto para "hh:mm"
+                        text = text.substring(0, 5);
+                        txHora.setText(text);
+                        txHora.setSelection(5); // Move o cursor para o final
+                    }
+                }
+
+                // Validação de valores de hora
+                if (text.length() == 5 && text.charAt(2) == ':') {
+                    String[] parts = text.split(":");
+                    try {
+                        int horas = Integer.parseInt(parts[0]);
+                        int minutos = Integer.parseInt(parts[1]);
+                        if (horas > 23 || minutos > 59) {
+                            Info.toastErro(getApplicationContext(), "Valores de hora inválidos");
+                            txHora.setText(""); // Limpa o campo se inválido
+                        }
+                    } catch (NumberFormatException e) {
+                        // Trata exceção se não for possível converter para int
+                        Info.toastErro(getApplicationContext(), "Formato de hora inválido");
+                        txHora.setText(""); // Limpa o campo em caso de erro
+                    }
+                }
+            }
+        });
+
+
+
     }
 }
