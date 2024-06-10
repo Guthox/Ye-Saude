@@ -80,15 +80,6 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        Button buttonTesteConsulta = findViewById(R.id.buttonTesteConsulta);
-        buttonTesteConsulta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, TelaConsultasRealizadas.class);
-                startActivity(intent);
-            }
-        });
-
         Button buttonPressao = findViewById(R.id.buttonPressao);
         buttonPressao.setOnClickListener(new View.OnClickListener(){
             @Override

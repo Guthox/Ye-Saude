@@ -85,6 +85,38 @@ public class BancoConsultas extends SQLiteOpenHelper {
         return dados.toString();
     }
 
+    public String pegarTipoData(String user){
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder dados = new StringBuilder();
+
+        Cursor cursor = db.rawQuery("SELECT id, especialidade, data FROM consultas WHERE user = ?", new String[]{user});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int idIndex = cursor.getColumnIndex("id");
+                int especialidadeIndex = cursor.getColumnIndex("especialidade");
+                int dataIndex = cursor.getColumnIndex("data");
+
+                if (idIndex != -1) {
+                    int id = cursor.getInt(idIndex);
+                    String especialidade = cursor.getString(especialidadeIndex);
+                    String data = cursor.getString(dataIndex);
+
+                    dados.append(id)
+                            .append(",").append(especialidade)
+                            .append(",").append(data)
+                            .append("\n");
+                }
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return dados.toString();
+    }
+
+
+
     // Conta o número de tuplas da tabela
     public int contarTuplas(String user){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -98,5 +130,27 @@ public class BancoConsultas extends SQLiteOpenHelper {
     public void remover(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete("consultas", "id=?", new String[]{""+id});
+    }
+
+
+    public String pegarNomesExames(String user){
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder dados = new StringBuilder();
+
+        Cursor cursor = db.rawQuery("SELECT especialidade FROM consultas WHERE user = ?", new String[]{user});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int especialidadeIndex = cursor.getColumnIndex("especialidade");
+                if (especialidadeIndex != -1) {
+                    String especialidade = cursor.getString(especialidadeIndex);
+                    dados.append(especialidade).append("\n");
+                }
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return dados.toString();
     }
 }

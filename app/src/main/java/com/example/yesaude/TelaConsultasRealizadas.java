@@ -55,6 +55,15 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                     }
                 });
 
+        TextView btnCancelar = findViewById(R.id.cancelar);
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TelaConsultasRealizadas.this, TelaConsulta.class);
+                startActivity(intent);
+            }
+        });
+
         TextView btnSalvar = findViewById(R.id.Salvar);
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +81,12 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                     imgStr = imagem.toString();
                 }
                 BancoConsultas bd = new BancoConsultas(v.getContext());
-                bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imagem.toString());
+                bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
                 Toast toast = Toast.makeText(v.getContext(), "Consulta adicionada", Toast.LENGTH_SHORT);
                 toast.show();
-                atividade.recreate();
-                txResumo.setText(bd.pegarDados(Info.getUsername()));
+                Intent intent = new Intent(TelaConsultasRealizadas.this, TelaConsulta.class);
+                startActivity(intent);
+                //txResumo.setText(bd.pegarDados(Info.getUsername()));
 
 //              Pegar a imagem pelo Uri
 //                try {

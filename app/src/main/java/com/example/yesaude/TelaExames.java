@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class TelaExames extends AppCompatActivity {
     List<String> groupList;
@@ -23,7 +25,7 @@ public class TelaExames extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     Activity atividade;
-
+    BancoIMC imc = new BancoIMC(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,24 +53,37 @@ public class TelaExames extends AppCompatActivity {
                 lastExpandedPosition = i;
             }
         });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                String selected = expandableListAdapter.getChild(i,i1).toString();
-                Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+
     }
 
     private void createCollection() {
-        String[] hemModel = {"17/02/2023", "79 mg/dl",
-                "25/05/2022", "80 mg/dl", "04/01/2022", "75 mg/dl"};
+        LinkedList<String[]> lista = new LinkedList<>();
+        String medidas = imc.pegarDados(Info.getUsername());
+        Scanner sc = new Scanner(medidas);
+        int indice = 0;
+        double valorImc;
+        String info;
+        while (sc.hasNextLine()){
+            String linha = sc.nextLine();
+            Scanner scItem = new Scanner(linha);
+            scItem.useDelimiter(",");
+            String[] item = new String[5];
+            item[0] = "ID: " + scItem.next();
+            item[1] = "Altura: " + scItem.next();
+            item[2] = "Peso: " + scItem.next();
+            valorImc = Double.parseDouble(scItem.next());
+            item[3] = "IMC: " + valorImc + " - " + Info.grauIMC(valorImc);
+            item[4] = "Dia: " + scItem.next();
+            lista.add(item);
+        }
+        sc.close();
         childColecao = new HashMap<String, List<String>>();
+        int n = 0;
         for(String group : groupList){
-            if (group.equals("Hemograma")){
-                loadChild(hemModel);
+            if (group.equals("Medida " + (n + 1))){
+                loadChild(lista.get(n));
             }
+            n++;
             childColecao.put(group, childList);
         }
     }
@@ -82,6 +97,9 @@ public class TelaExames extends AppCompatActivity {
 
     private void createGroupList() {
         groupList = new ArrayList<>();
-        groupList.add("Hemograma");
+        int n = imc.contarTuplas(Info.getUsername());
+        for (int i = 0; i < n; i++){
+            groupList.add("Medida " + (i + 1));
+        }
     }
 }
