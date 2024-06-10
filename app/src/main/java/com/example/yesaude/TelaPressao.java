@@ -117,7 +117,7 @@ public class TelaPressao extends AppCompatActivity {
                     Format fo = new SimpleDateFormat("dd-MM-yyyy");
                     Date data = Calendar.getInstance().getTime();
                     bdPressao.inserir(Info.getUsername(), pressao, fo.format(data));
-                    Toast toast = Toast.makeText(v.getContext(), "Pressao adicionado", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(v.getContext(), "Pressao adicionada", Toast.LENGTH_SHORT);
                     toast.show();
                     atividade.recreate();
                 }

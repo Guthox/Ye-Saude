@@ -137,7 +137,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT especialidade FROM consultas WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, especialidade FROM consultas WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {

@@ -1,12 +1,12 @@
 package com.example.yesaude;
 
-import android.text.Layout;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.content.Context;
+
 import java.util.List;
 
 public class AdapterListaMed extends RecyclerView.Adapter<ViewList> {

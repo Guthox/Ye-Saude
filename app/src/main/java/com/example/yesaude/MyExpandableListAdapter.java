@@ -12,7 +12,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -104,6 +103,10 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                         }
                         else if (atividade.getClass() == TelaConsulta.class){
                             BancoConsultas bd = new BancoConsultas(v.getContext());
+                            bd.remover(Info.getIdEscolhido());
+                        }
+                        else if (atividade.getClass() == TelaExames.class){
+                            BancoExames bd = new BancoExames(v.getContext());
                             bd.remover(Info.getIdEscolhido());
                         }
                         notifyDataSetChanged();

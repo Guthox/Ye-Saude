@@ -1,14 +1,23 @@
 package com.example.yesaude;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -25,7 +34,10 @@ public class TelaExames extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     Activity atividade;
-    BancoIMC imc = new BancoIMC(this);
+    Uri imagem = null;
+    Dialog dialog;
+    BancoExames bd = new BancoExames(this);
+    private ActivityResultLauncher<String> galleryLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +66,88 @@ public class TelaExames extends AppCompatActivity {
             }
         });
 
+        dialog = new Dialog(TelaExames.this);
+        dialog.setContentView(R.layout.caixa_diag_exame);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
+        dialog.setCancelable(false);
+
+        Button btnCancel = dialog.findViewById(R.id.btnCalcCancelar);
+        Button btnDAdicionar = dialog.findViewById(R.id.btnAdicinar);
+
+        btnCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                dialog.dismiss();
+            }
+        });
+
+        // Inicialize o launcher da galeria
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri result) {
+                        if (result != null) {
+                            imagem = result;
+                            Toast toast = Toast.makeText(atividade, "Imagem selecionada", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        else{
+                            Toast toast = Toast.makeText(atividade, "Nenhuma imagem selecionada", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
+        btnDAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText data = dialog.findViewById(R.id.inputData);
+                EditText nomeExame = dialog.findViewById(R.id.inputNomeExame);
+                String dataStr = data.getText().toString();
+                String exameStr = nomeExame.getText().toString();
+                String imgStr;
+                if (imagem == null){
+                    imgStr = "";
+                }
+                else{
+                    imgStr = imagem.toString();
+                }
+                if (exameStr.isEmpty() || dataStr.isEmpty() || imgStr.isEmpty()){
+                    Toast toast = Toast.makeText(v.getContext(), "Campos inválidos", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else{
+                    BancoExames bd = new BancoExames(v.getContext());
+                    bd.inserir(Info.getUsername(), exameStr, dataStr, imgStr);
+                    Toast toast = Toast.makeText(v.getContext(), "Exame adicionado com sucesso", Toast.LENGTH_SHORT);
+                    toast.show();
+                    atividade.recreate();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        ImageView btnAdicionar = findViewById(R.id.btnAddExame);
+        btnAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
+        Button btnAnexar = dialog.findViewById(R.id.btnAnexar);
+        btnAnexar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryLauncher.launch("image/*");
+            }
+        });
+
     }
 
     private void createCollection() {
         LinkedList<String[]> lista = new LinkedList<>();
-        String medidas = imc.pegarDados(Info.getUsername());
+        String medidas = bd.pegarDados(Info.getUsername());
         Scanner sc = new Scanner(medidas);
         int indice = 0;
         double valorImc;
@@ -67,22 +156,18 @@ public class TelaExames extends AppCompatActivity {
             String linha = sc.nextLine();
             Scanner scItem = new Scanner(linha);
             scItem.useDelimiter(",");
-            String[] item = new String[5];
+            String[] item = new String[4];
             item[0] = "ID: " + scItem.next();
-            item[1] = "Altura: " + scItem.next();
-            item[2] = "Peso: " + scItem.next();
-            valorImc = Double.parseDouble(scItem.next());
-            item[3] = "IMC: " + valorImc + " - " + Info.grauIMC(valorImc);
-            item[4] = "Dia: " + scItem.next();
+            item[1] = "Tipo: " + scItem.next();
+            item[2] = "Data: " + scItem.next();
+            item[3] = "Exame: " + scItem.next();
             lista.add(item);
         }
         sc.close();
         childColecao = new HashMap<String, List<String>>();
         int n = 0;
         for(String group : groupList){
-            if (group.equals("Medida " + (n + 1))){
-                loadChild(lista.get(n));
-            }
+            loadChild(lista.get(n));
             n++;
             childColecao.put(group, childList);
         }
@@ -97,9 +182,11 @@ public class TelaExames extends AppCompatActivity {
 
     private void createGroupList() {
         groupList = new ArrayList<>();
-        int n = imc.contarTuplas(Info.getUsername());
-        for (int i = 0; i < n; i++){
-            groupList.add("Medida " + (i + 1));
+        String especialidades = bd.pegarNomesExames(Info.getUsername());
+        Scanner sc = new Scanner(especialidades);
+        int i = 1;
+        while (sc.hasNextLine()){
+            groupList.add("" + i++ + ") " + sc.nextLine());
         }
     }
 }

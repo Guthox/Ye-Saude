@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -45,12 +44,10 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                     public void onActivityResult(Uri result) {
                         if (result != null) {
                             imagem = result;
-                            Toast toast = Toast.makeText(atividade, "Imagem selecionada", Toast.LENGTH_SHORT);
-                            toast.show();
+                            Info.mensagemCerto(atividade.getCurrentFocus(), "Imagem selecionada com sucesso");
                         }
                         else{
-                            Toast toast = Toast.makeText(atividade, "Nenhuma imagem selecionada", Toast.LENGTH_SHORT);
-                            toast.show();
+                            Info.mensagemErro(atividade.getCurrentFocus(), "Nenhuma imagem selecionada");
                         }
                     }
                 });
@@ -74,18 +71,27 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                 EditText txResumo = findViewById(R.id.txResumo);
                 EditText txRetorno = findViewById(R.id.txRetorno);
                 String imgStr;
+
+                String especialidadeStr = txEspecialidade.getText().toString();
+                String dataStr = txData.getText().toString();
+                String horaStr = txHora.getText().toString();
+                String resumoStr = txResumo.getText().toString();
+                String retornoStr = txRetorno.getText().toString();
                 if (imagem == null){
                     imgStr = "";
                 }
                 else{
                     imgStr = imagem.toString();
                 }
-                BancoConsultas bd = new BancoConsultas(v.getContext());
-                bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
-                Toast toast = Toast.makeText(v.getContext(), "Consulta adicionada", Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(TelaConsultasRealizadas.this, TelaConsulta.class);
-                startActivity(intent);
+                if (especialidadeStr.isEmpty() || dataStr.isEmpty() || horaStr.isEmpty()){
+                    Info.mensagemErro(v, "Especialidade, data e hora não podem estar vázios.");
+                }
+                else {
+                    BancoConsultas bd = new BancoConsultas(v.getContext());
+                    bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
+                    Info.mensagemCerto(v, "Consulta Adicionada com sucesso");
+                }
+
                 //txResumo.setText(bd.pegarDados(Info.getUsername()));
 
 //              Pegar a imagem pelo Uri

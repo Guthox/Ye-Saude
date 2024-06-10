@@ -1,5 +1,13 @@
 package com.example.yesaude;
 
+import android.graphics.Color;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
+
 public class Info {
     private static String username;
     private static int idEscolhido;
@@ -67,5 +75,29 @@ public class Info {
             texto = "Obesidade III";
         }
         return texto;
+    }
+
+    private static void mensagem(View v, String mensagem, String cor){
+        Snackbar snackbar = Snackbar
+                .make(v, mensagem, Snackbar.LENGTH_LONG);
+
+        snackbar.setBackgroundTint(Color.parseColor(cor));
+        TextView textView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextColor(Color.parseColor("#000000"));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16); // Defina o tamanho da fonte em SP
+
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) snackbar.getView().getLayoutParams();
+        params.setMargins(params.leftMargin, 100, params.rightMargin, 250); // Defina a margem superior e inferior aqui
+        snackbar.getView().setLayoutParams(params);
+
+        snackbar.show();
+    }
+
+    public static void mensagemErro(View v, String mensagem){
+        mensagem(v, mensagem, "#FF5E5E");
+    }
+
+    public static void mensagemCerto(View v, String mensagem){
+        mensagem(v, mensagem, "#0CFF00");
     }
 }
