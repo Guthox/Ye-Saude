@@ -175,11 +175,20 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                         Intent intent = new Intent(v.getContext(), ImagemZoom.class);
                         v.getContext().startActivity(intent);
                 }
-                else if (atividade.getClass() == TelaConsulta.class){
+                else if (atividade.getClass() == TelaConsulta.class && i1 == 3){
+                    BancoConsultas bd = new BancoConsultas(v.getContext());
+                    String exame = bd.pegarExame(Info.getUsername(), Info.getIdEscolhido());
+                    if (!exame.isEmpty()){
+                        Intent intent = new Intent(v.getContext(), ImagemZoom.class);
+                        v.getContext().startActivity(intent);
+                    }
+                }
+                else if (atividade.getClass() == TelaConsulta.class && i1 != 3){
                     Info.setEditarConsulta(true);
                     Intent intent = new Intent(v.getContext(), TelaConsultasRealizadas.class);
                     v.getContext().startActivity(intent);
                 }
+
             }
         });
 
