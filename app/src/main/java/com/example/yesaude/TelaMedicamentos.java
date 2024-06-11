@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -43,28 +44,13 @@ public class TelaMedicamentos extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.lista);
 
+        // Inicializa a lista de itens
         itens = new ArrayList<>();
-        BancoMedicar bd = new BancoMedicar(this);
-        String dados = bd.pegarDados(Info.getUsername());
-        Scanner sc = new Scanner(dados);
-        int id = 1; // Inicializa o id
-        while (sc.hasNextLine()){
-            String linha = sc.nextLine();
-            Scanner scItem = new Scanner(linha);
-            scItem.useDelimiter(",");
-            itens.add(new ListaDeMedicamentos(id++, scItem.next(), scItem.next())); // Incrementa o id a cada item
-        }
-        sc.close();
 
-        for (ListaDeMedicamentos item : itens) {
-            String nomeMedicamento = item.getMeds();
-            if (nomeMedicamento.length() > 11) {
-                // Ajustando a string se exceder 11 caracteres
-                nomeMedicamento = nomeMedicamento.substring(0, 11) + "...";
-                item.setMeds(nomeMedicamento);
-            }
-        }
+        // Carrega os medicamentos do banco de dados
+        carregarMedicamentos();
 
+        // Configura o RecyclerView e o Adapter
         adapter = new AdapterListaMed(this, itens, new ViewList.OnItemClickListener() {
             @Override
             public void onItemClick(final ListaDeMedicamentos item) {
@@ -74,7 +60,7 @@ public class TelaMedicamentos extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        // CODIGO CAIXA DE DIALOGO ADICIONAR MEDICAMENTO
+        // Configura o clique no botão de adicionar medicamento
         dialog = new Dialog(TelaMedicamentos.this);
         dialog.setContentView(R.layout.caixa_diag_med);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -82,7 +68,7 @@ public class TelaMedicamentos extends AppCompatActivity {
         dialog.setCancelable(false);
 
         Button btnCalcCancelar = dialog.findViewById(R.id.btnMedCancelar);
-        btnCalcCancelar.setOnClickListener(new View.OnClickListener(){
+        btnCalcCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -92,9 +78,9 @@ public class TelaMedicamentos extends AppCompatActivity {
         atividade = this;
 
         Button btnCalcAceitar = dialog.findViewById(R.id.btnAddMed);
-        btnCalcAceitar.setOnClickListener(new View.OnClickListener(){
+        btnCalcAceitar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 EditText med = dialog.findViewById(R.id.inputMed);
                 EditText hora = dialog.findViewById(R.id.inputHora);
                 String medStr;
@@ -102,17 +88,18 @@ public class TelaMedicamentos extends AppCompatActivity {
                 try {
                     medStr = med.getText().toString();
                     horaStr = hora.getText().toString();
-                    if (medStr.isEmpty() || horaStr.isEmpty()){
+                    if (medStr.isEmpty() || horaStr.isEmpty()) {
                         Info.toastErro(v.getContext(), "Valores inválidos");
-                    }
-                    else{
+                    } else {
                         BancoMedicar bd = new BancoMedicar(v.getContext());
                         bd.inserir(Info.getUsername(), medStr, horaStr);
                         Info.toastCerto(v.getContext(), "Remédio adicionado");
-                        atividade.recreate();
+
+                        // Atualiza a lista após a adição do novo medicamento
+                        carregarMedicamentos();
+                        adapter.notifyDataSetChanged(); // Notifica o adaptador sobre as mudanças na lista
                     }
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     Info.toastErro(v.getContext(), "Valores inválidos");
                 }
                 dialog.dismiss();
@@ -175,6 +162,32 @@ public class TelaMedicamentos extends AppCompatActivity {
         });
     }
 
+    // Método para carregar medicamentos do banco de dados
+    private void carregarMedicamentos() {
+        itens.clear(); // Limpa a lista antes de adicionar novos itens
+        BancoMedicar bd = new BancoMedicar(this);
+        String dados = bd.pegarDados(Info.getUsername());
+        Scanner sc = new Scanner(dados);
+        int id = 1; // Inicializa o id
+        while (sc.hasNextLine()) {
+            String linha = sc.nextLine();
+            Scanner scItem = new Scanner(linha);
+            scItem.useDelimiter(",");
+            itens.add(new ListaDeMedicamentos(id++, scItem.next(), scItem.next())); // Incrementa o id a cada item
+        }
+        sc.close();
+
+        for (ListaDeMedicamentos item : itens) {
+            String nomeMedicamento = item.getMeds();
+            if (nomeMedicamento.length() > 11) {
+                // Ajustando a string se exceder 11 caracteres
+                nomeMedicamento = nomeMedicamento.substring(0, 11) + "...";
+                item.setMeds(nomeMedicamento);
+            }
+        }
+    }
+
+    // Método para mostrar caixa de diálogo de exclusão de medicamento
     private void showDeleteDialog(final ListaDeMedicamentos item) {
         deleteDialog = new Dialog(TelaMedicamentos.this);
         deleteDialog.setContentView(R.layout.caixa_diag_delete_med);
@@ -195,26 +208,24 @@ public class TelaMedicamentos extends AppCompatActivity {
             public void onClick(View v) {
                 // Deletar medicamento do banco de dados
                 BancoMedicar bd = new BancoMedicar(TelaMedicamentos.this);
-                int idToDelete = item.getId(); // Verifique o ID aqui
+                try {
+                    if (bd.deletarMedicamento(item.getId())) {
+                        Info.toastCerto(v.getContext(), "Medicamento deletado com sucesso");
 
-                if (bd.deletarMedicamento(idToDelete)) {
-                    Info.toastCerto(v.getContext(), "Medicamento deletado com sucesso");
-
-                    // Remova o item da lista local (se necessário)
-                    itens.remove(item);
-
-                    deleteDialog.dismiss();
-                    adapter.notifyDataSetChanged(); // Notifique o adaptador da lista de mudanças
-
-                    atividade.recreate();
-                } else {
+                        // Atualiza a lista após a deleção
+                        itens.remove(item); // Remove o item da lista local
+                        adapter.notifyDataSetChanged(); // Notifica o adaptador da lista de mudanças
+                    } else {
+                        Info.toastErro(getApplicationContext(), "Erro ao deletar medicamento");
+                    }
+                } catch (Exception e) {
+                    Log.e("DeleteMedicamento", "Erro ao deletar medicamento", e);
                     Info.toastErro(getApplicationContext(), "Erro ao deletar medicamento");
                 }
+                deleteDialog.dismiss();
             }
         });
 
-
         deleteDialog.show();
     }
-
 }
