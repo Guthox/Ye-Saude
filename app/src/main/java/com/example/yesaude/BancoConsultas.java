@@ -133,22 +133,25 @@ public class BancoConsultas extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT id, especialidade, data FROM consultas WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, especialidade, data, exame FROM consultas WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 int idIndex = cursor.getColumnIndex("id");
                 int especialidadeIndex = cursor.getColumnIndex("especialidade");
                 int dataIndex = cursor.getColumnIndex("data");
+                int exameIndex = cursor.getColumnIndex("exame");
 
                 if (idIndex != -1) {
                     int id = cursor.getInt(idIndex);
                     String especialidade = cursor.getString(especialidadeIndex);
                     String data = cursor.getString(dataIndex);
+                    String exame = cursor.getString(exameIndex);
 
                     dados.append(id)
                             .append(",").append(especialidade)
                             .append(",").append(data)
+                            .append(",").append(exame)
                             .append("\n");
                 }
             } while (cursor.moveToNext());
@@ -219,6 +222,27 @@ public class BancoConsultas extends SQLiteOpenHelper {
         boolean idExiste = cursor.moveToFirst();
         cursor.close();
         return idExiste;
+    }
+
+    public String pegarExame(String user, int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder dados = new StringBuilder();
+
+        Cursor cursor = db.rawQuery("SELECT exame FROM consultas WHERE user = ? AND id = ?", new String[]{user, ""+id});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int exameIndex = cursor.getColumnIndex("exame");
+                if (exameIndex != -1) {
+                    String exame = cursor.getString(exameIndex);
+                    dados.append(exame);
+                }
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return dados.toString();
     }
 
 }

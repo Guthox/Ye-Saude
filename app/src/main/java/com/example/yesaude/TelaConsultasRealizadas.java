@@ -57,6 +57,9 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
             txHora.setText(sc.next());
             txResumo.setText(sc.next());
             txRetorno.setText(sc.next());
+            String imgStr = sc.hasNext() ? sc.next() : "";
+            imgStr = imgStr.substring(0, imgStr.length()-1);
+            imagem = Uri.parse(imgStr);
             sc.close();
         }
 
@@ -73,6 +76,7 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                             Info.toastCerto(atividade, "Imagem selecionada com sucesso");
                         }
                         else{
+                            imagem = null;
                             Info.toastErro(atividade, "Nenhuma imagem selecionada");
                         }
                     }

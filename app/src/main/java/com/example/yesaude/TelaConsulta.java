@@ -80,10 +80,12 @@ public class TelaConsulta extends AppCompatActivity {
             String linha = sc.nextLine();
             Scanner scItem = new Scanner(linha);
             scItem.useDelimiter(",");
-            String[] item = new String[3];
+            String[] item = new String[4];
             item[0] = "ID: " + scItem.next();
             item[1] = "Especialidade: " + scItem.next();
             item[2] = "Data: " + scItem.next();
+            String exame = scItem.hasNext() ? scItem.next() : "";
+            item[3] = "Foto: " + (exame.isEmpty() ? "Nenhuma foto adicionada" : "Clique aqui para visualizar");
             lista.add(item);
         }
         sc.close();
