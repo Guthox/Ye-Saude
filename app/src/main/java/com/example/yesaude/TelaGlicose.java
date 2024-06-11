@@ -146,7 +146,9 @@ public class TelaGlicose extends AppCompatActivity {
             scItem.useDelimiter(",");
             String[] item = new String[3];
             item[0] = "ID: " + scItem.next();
-            item[1] = "Glicose: " + scItem.next() + " mg/dl";
+            String press = scItem.next();
+            String grau = Info.grauGlicose(press);
+            item[1] = "Glicose: " + press + " mg/dl - " + grau;
             item[2] = "Dia: " + scItem.next();
             lista.add(item);
         }

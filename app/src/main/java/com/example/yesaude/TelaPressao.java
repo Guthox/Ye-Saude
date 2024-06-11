@@ -151,7 +151,9 @@ public class TelaPressao extends AppCompatActivity {
             scItem.useDelimiter(",");
             String[] item = new String[3];
             item[0] = "ID: " + scItem.next();
-            item[1] = "Pressão: " + scItem.next() + " mmHg";
+            String press = scItem.next();
+            String grau = Info.grauPressao(press);
+            item[1] = "Pressão: " + press + " mmHg - " + grau;
             item[2] = "Dia: " + scItem.next();
             lista.add(item);
         }
