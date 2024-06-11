@@ -1,10 +1,17 @@
 package com.example.yesaude;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +19,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.graphics.Bitmap;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -153,6 +164,19 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView item = view.findViewById(R.id.model);
         item.setText(model);
+
+        item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(atividade.getClass() == TelaExames.class && i1 == 3){
+                        Info.setUri(Uri.parse(item.getText().toString().substring(7)));
+                        Intent intent = new Intent(v.getContext(), ImagemZoom.class);
+                        v.getContext().startActivity(intent);
+                        Info.toastCerto(v.getContext(), "Abriu");
+                }
+            }
+        });
+
         return view;
     }
 

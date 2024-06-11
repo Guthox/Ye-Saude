@@ -2,6 +2,7 @@ package com.example.yesaude;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class Info {
     private static String username;
     private static int idEscolhido;
+    private static Uri uri;
 
     public static String getUsername() {
         return username;
@@ -26,6 +28,8 @@ public class Info {
     public  static int getIdEscolhido() {return idEscolhido;}
     public  static void setIdEscolhido(int id){idEscolhido = id;}
 
+    public  static void setUri(Uri Nuri){uri = Nuri;}
+    public static Uri getUri(){return uri;}
     public static String grauPressao(String pressao){
         String texto;
         int min = 0;
