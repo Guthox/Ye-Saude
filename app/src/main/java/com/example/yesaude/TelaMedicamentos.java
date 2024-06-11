@@ -168,12 +168,11 @@ public class TelaMedicamentos extends AppCompatActivity {
         BancoMedicar bd = new BancoMedicar(this);
         String dados = bd.pegarDados(Info.getUsername());
         Scanner sc = new Scanner(dados);
-        int id = 1; // Inicializa o id
         while (sc.hasNextLine()) {
             String linha = sc.nextLine();
             Scanner scItem = new Scanner(linha);
             scItem.useDelimiter(",");
-            itens.add(new ListaDeMedicamentos(id++, scItem.next(), scItem.next())); // Incrementa o id a cada item
+            itens.add(new ListaDeMedicamentos(Integer.parseInt(scItem.next()), scItem.next(), scItem.next()));
         }
         sc.close();
 

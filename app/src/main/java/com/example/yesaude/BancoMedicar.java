@@ -40,18 +40,20 @@ public class BancoMedicar extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT medicamento, hora FROM medicar WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, medicamento, hora FROM medicar WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
+                int idIndex = cursor.getColumnIndex("id");
                 int medicamentoIndex = cursor.getColumnIndex("medicamento");
                 int horaIndex = cursor.getColumnIndex("hora");
 
                 if (medicamentoIndex != -1 && horaIndex != -1) {
+                    int id = cursor.getInt(idIndex);
                     String medicamento = cursor.getString(medicamentoIndex);
                     String hora = cursor.getString(horaIndex);
 
-                    dados.append(medicamento).append(",").append(hora).append("\n");
+                    dados.append(id).append(",").append(medicamento).append(",").append(hora).append("\n");
                 }
             } while (cursor.moveToNext());
         }
