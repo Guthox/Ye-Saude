@@ -14,4 +14,19 @@ public class ViewList extends RecyclerView.ViewHolder {
         med = itemView.findViewById(R.id.med);
         horario = itemView.findViewById(R.id.horario);
     }
+
+    public void bind(final ListaDeMedicamentos item, final OnItemClickListener listener) {
+        med.setText(item.getMeds());
+        horario.setText(item.getHorario());
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(item);
+            }
+        });
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(ListaDeMedicamentos item);
+    }
 }

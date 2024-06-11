@@ -1,13 +1,23 @@
 package com.example.yesaude;
 
-public class ListaDeMedicamentos{
+public class ListaDeMedicamentos {
 
-    String meds;
-    String horario;
+    private int id; // Novo campo para identificador único
+    private String meds;
+    private String horario;
 
-    public ListaDeMedicamentos(String meds, String horario) {
+    public ListaDeMedicamentos(int id, String meds, String horario) {
+        this.id = id;
         this.meds = meds;
         this.horario = horario;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMeds() {
@@ -26,4 +36,3 @@ public class ListaDeMedicamentos{
         this.horario = horario;
     }
 }
-

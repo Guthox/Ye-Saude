@@ -13,10 +13,12 @@ public class AdapterListaMed extends RecyclerView.Adapter<ViewList> {
 
     Context context;
     List<ListaDeMedicamentos> itens;
+    private ViewList.OnItemClickListener listener;
 
-    public AdapterListaMed(Context context, List<ListaDeMedicamentos> itens) {
+    public AdapterListaMed(Context context, List<ListaDeMedicamentos> itens, ViewList.OnItemClickListener listener) {
         this.context = context;
         this.itens = itens;
+        this.listener = listener;
     }
 
     @NonNull
@@ -27,8 +29,7 @@ public class AdapterListaMed extends RecyclerView.Adapter<ViewList> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewList holder, int position) {
-        holder.med.setText(itens.get(position).getMeds());
-        holder.horario.setText(itens.get(position).getHorario());
+        holder.bind(itens.get(position), listener);
     }
 
     @Override

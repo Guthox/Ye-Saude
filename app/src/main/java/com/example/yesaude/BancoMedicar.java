@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 public class BancoMedicar extends SQLiteOpenHelper {
 
-
     public static final String databaseName = "medicar.db";
 
     public BancoMedicar(@Nullable Context context) {
@@ -60,5 +59,10 @@ public class BancoMedicar extends SQLiteOpenHelper {
             cursor.close();
         }
         return dados.toString();
+    }
+
+    public boolean deletarMedicamento(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("medicar", "id=?", new String[]{String.valueOf(id)}) > 0;
     }
 }

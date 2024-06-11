@@ -26,6 +26,10 @@ public class TelaMedicamentos extends AppCompatActivity {
 
     Activity atividade;
     Dialog dialog;
+    Dialog deleteDialog;
+    AdapterListaMed adapter;
+    List<ListaDeMedicamentos> itens;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +43,16 @@ public class TelaMedicamentos extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.lista);
 
-        List<ListaDeMedicamentos> itens = new ArrayList<ListaDeMedicamentos>();
+        itens = new ArrayList<>();
         BancoMedicar bd = new BancoMedicar(this);
         String dados = bd.pegarDados(Info.getUsername());
         Scanner sc = new Scanner(dados);
+        int id = 1; // Inicializa o id
         while (sc.hasNextLine()){
             String linha = sc.nextLine();
             Scanner scItem = new Scanner(linha);
             scItem.useDelimiter(",");
-            itens.add(new ListaDeMedicamentos(scItem.next(), scItem.next()));
+            itens.add(new ListaDeMedicamentos(id++, scItem.next(), scItem.next())); // Incrementa o id a cada item
         }
         sc.close();
 
@@ -58,15 +63,21 @@ public class TelaMedicamentos extends AppCompatActivity {
                 nomeMedicamento = nomeMedicamento.substring(0, 11) + "...";
                 item.setMeds(nomeMedicamento);
             }
-
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new AdapterListaMed(getApplicationContext(), itens));
         }
 
-        //CODIGO CAIXA DE DIALOGO CALCULADORA
+        adapter = new AdapterListaMed(this, itens, new ViewList.OnItemClickListener() {
+            @Override
+            public void onItemClick(final ListaDeMedicamentos item) {
+                showDeleteDialog(item);
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        // CODIGO CAIXA DE DIALOGO ADICIONAR MEDICAMENTO
         dialog = new Dialog(TelaMedicamentos.this);
         dialog.setContentView(R.layout.caixa_diag_med);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
         dialog.setCancelable(false);
 
@@ -75,7 +86,6 @@ public class TelaMedicamentos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                //faz a caixa de diag sumir
             }
         });
 
@@ -163,13 +173,48 @@ public class TelaMedicamentos extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
+    private void showDeleteDialog(final ListaDeMedicamentos item) {
+        deleteDialog = new Dialog(TelaMedicamentos.this);
+        deleteDialog.setContentView(R.layout.caixa_diag_delete_med);
+        deleteDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        deleteDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.caixa_diag_calculadora_bg));
+
+        Button btnMedDeleteCancelar = deleteDialog.findViewById(R.id.btnMedDeleteCancelar);
+        btnMedDeleteCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+
+        Button btnMedDeletar = deleteDialog.findViewById(R.id.btnMedDeletar);
+        btnMedDeletar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Deletar medicamento do banco de dados
+                BancoMedicar bd = new BancoMedicar(TelaMedicamentos.this);
+                int idToDelete = item.getId(); // Verifique o ID aqui
+
+                if (bd.deletarMedicamento(idToDelete)) {
+                    Info.toastCerto(v.getContext(), "Medicamento deletado com sucesso");
+
+                    // Remova o item da lista local (se necessário)
+                    itens.remove(item);
+
+                    deleteDialog.dismiss();
+                    adapter.notifyDataSetChanged(); // Notifique o adaptador da lista de mudanças
+
+                    atividade.recreate();
+                } else {
+                    Info.toastErro(getApplicationContext(), "Erro ao deletar medicamento");
+                }
+            }
+        });
 
 
-    //bd.inserir(Info.getUsername(), "medicamento", "hora");
+        deleteDialog.show();
+    }
 
 }
-
