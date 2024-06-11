@@ -109,4 +109,25 @@ public class BancoExames extends SQLiteOpenHelper {
         return dados.toString();
     }
 
+    public String pegarExame(String user, int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder dados = new StringBuilder();
+
+        Cursor cursor = db.rawQuery("SELECT exame FROM exames WHERE user = ? AND id = ?", new String[]{user, ""+id});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int exameIndex = cursor.getColumnIndex("exame");
+                if (exameIndex != -1) {
+                    String exame = cursor.getString(exameIndex);
+                    dados.append(exame);
+                }
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return dados.toString();
+    }
+
 }

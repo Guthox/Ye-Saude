@@ -244,7 +244,8 @@ public class TelaExames extends AppCompatActivity {
             item[0] = "ID: " + scItem.next();
             item[1] = "Tipo: " + scItem.next();
             item[2] = "Data: " + scItem.next();
-            item[3] = "Exame: " + scItem.next();
+            item[3] = "Exame: Clique para visualizar";
+            scItem.next(); // Pula o exame String
             lista.add(item);
         }
         sc.close();

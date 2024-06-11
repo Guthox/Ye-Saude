@@ -47,6 +47,7 @@ public class TelaConsulta extends AppCompatActivity {
         buttonConsulta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Info.setIdEscolhido(-1);
                 Intent intent = new Intent(TelaConsulta.this, TelaConsultasRealizadas.class);
                 startActivity(intent);
             }

@@ -169,11 +169,13 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if(atividade.getClass() == TelaExames.class && i1 == 3){
-                        Info.setUri(Uri.parse(item.getText().toString().substring(7)));
+                        BancoExames bd = new BancoExames(v.getContext());
+                        String exame = bd.pegarExame(Info.getUsername(), Info.getIdEscolhido());
+                        Info.setUri(Uri.parse(exame));
                         Intent intent = new Intent(v.getContext(), ImagemZoom.class);
                         v.getContext().startActivity(intent);
                 }
-                if (atividade.getClass() == TelaConsulta.class && i1 == 0){
+                else if (atividade.getClass() == TelaConsulta.class){
                     Info.setEditarConsulta(true);
                     Intent intent = new Intent(v.getContext(), TelaConsultasRealizadas.class);
                     v.getContext().startActivity(intent);

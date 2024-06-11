@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -58,27 +59,21 @@ public class ImagemZoom extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         scaleGestureDetector.onTouchEvent(event);
 
-        // Obtém as coordenadas do evento de toque
         float currentX = event.getX();
         float currentY = event.getY();
 
-        // Verifica o tipo de evento de toque
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                // Salva as coordenadas do toque inicial
                 previousX = currentX;
                 previousY = currentY;
                 break;
             case MotionEvent.ACTION_MOVE:
-                // Calcula a diferença entre as coordenadas atuais e anteriores
                 float deltaX = currentX - previousX;
                 float deltaY = currentY - previousY;
 
-                // Atualiza a posição da imagem
                 imageView.setTranslationX(imageView.getTranslationX() + deltaX);
                 imageView.setTranslationY(imageView.getTranslationY() + deltaY);
 
-                // Salva as coordenadas atuais como as coordenadas anteriores para o próximo evento de toque
                 previousX = currentX;
                 previousY = currentY;
                 break;

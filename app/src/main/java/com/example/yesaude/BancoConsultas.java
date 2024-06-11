@@ -215,7 +215,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
 
     public boolean verificarIdExistente(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT id FROM consultas WHERE id = ?", new String[]{""+id});
+        Cursor cursor = db.rawQuery("SELECT 1 FROM consultas WHERE id = ?", new String[]{""+id});
         boolean idExiste = cursor.moveToFirst();
         cursor.close();
         return idExiste;
