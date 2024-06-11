@@ -34,6 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/mais" />
+
     <TextView
         android:id="@+id/corfundoTitulo"
         android:layout_width="match_parent"
@@ -66,12 +67,12 @@
         android:id="@+id/lista"
         android:layout_width="362dp"
         android:layout_height="422dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnMed"
+
+
+        android:layout_marginTop="105dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.808" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
