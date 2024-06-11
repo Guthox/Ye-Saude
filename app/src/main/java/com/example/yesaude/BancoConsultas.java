@@ -85,6 +85,50 @@ public class BancoConsultas extends SQLiteOpenHelper {
         return dados.toString();
     }
 
+    public String pegarDados(String user, int idU){
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder dados = new StringBuilder();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM consultas WHERE user = ? AND id = ?", new String[]{user, ""+idU});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int idIndex = cursor.getColumnIndex("id");
+                int especialidadeIndex = cursor.getColumnIndex("especialidade");
+                int dataIndex = cursor.getColumnIndex("data");
+                int horaIndex = cursor.getColumnIndex("hora");
+                int resumoIndex = cursor.getColumnIndex("resumo");
+                int retornoIndex = cursor.getColumnIndex("retorno");
+                int exameIndex = cursor.getColumnIndex("exame");
+
+
+                if (idIndex != -1) {
+                    int id = cursor.getInt(idIndex);
+                    String especialidade = cursor.getString(especialidadeIndex);
+                    String data = cursor.getString(dataIndex);
+                    String hora = cursor.getString(horaIndex);
+                    String resumo = cursor.getString(resumoIndex);
+                    String retorno = cursor.getString(retornoIndex);
+                    String exame = cursor.getString(exameIndex);
+
+                    dados.append(id)
+                            .append(",").append(especialidade)
+                            .append(",").append(data)
+                            .append(",").append(hora)
+                            .append(",").append(resumo)
+                            .append(",").append(retorno)
+                            .append(",").append(exame)
+                            .append("\n");
+                }
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return dados.toString();
+    }
+
+
     public String pegarTipoData(String user){
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
@@ -153,4 +197,28 @@ public class BancoConsultas extends SQLiteOpenHelper {
         }
         return dados.toString();
     }
+
+    public boolean alterarConsulta(int id, String user, String especialidade, String data, String hora, String resumo, String retorno, String exame) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user", user);
+        contentValues.put("especialidade", especialidade);
+        contentValues.put("data", data);
+        contentValues.put("hora", hora);
+        contentValues.put("resumo", resumo);
+        contentValues.put("retorno", retorno);
+        contentValues.put("exame", exame);
+
+        int rowsAffected = db.update("consultas", contentValues, "id = ?", new String[]{String.valueOf(id)});
+        return rowsAffected > 0;
+    }
+
+    public boolean verificarIdExistente(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM consultas WHERE id = ?", new String[]{""+id});
+        boolean idExiste = cursor.moveToFirst();
+        cursor.close();
+        return idExiste;
+    }
+
 }

@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class Info {
     private static String username;
     private static int idEscolhido;
+    private static boolean editarConsulta;
     private static Uri uri;
 
     public static String getUsername() {
@@ -30,6 +31,9 @@ public class Info {
 
     public  static void setUri(Uri Nuri){uri = Nuri;}
     public static Uri getUri(){return uri;}
+
+    public static boolean getEditarConsulta(){return editarConsulta;}
+    public static void setEditarConsulta(boolean novoParametro){editarConsulta = novoParametro;}
     public static String grauPressao(String pressao){
         String texto;
         int min = 0;

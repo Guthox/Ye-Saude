@@ -1,6 +1,7 @@
 package com.example.yesaude;
 
 import android.app.Activity;
+import android.app.DirectAction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Scanner;
 
 public class TelaConsultasRealizadas extends AppCompatActivity {
 
@@ -35,6 +38,27 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(this.getResources().getColor(R.color.verdebom));
+
+        if (Info.getEditarConsulta()){
+            Info.setEditarConsulta(false);
+            int id = Info.getIdEscolhido();
+            EditText txEspecialidade = findViewById(R.id.txEspecialidade);
+            EditText txData = findViewById(R.id.txData);
+            EditText txHora = findViewById(R.id.txHora);
+            EditText txResumo = findViewById(R.id.txResumo);
+            EditText txRetorno = findViewById(R.id.txRetorno);
+            BancoConsultas bd = new BancoConsultas(this);
+            String dados = bd.pegarDados(Info.getUsername(), id);
+            Scanner sc = new Scanner(dados);
+            sc.useDelimiter(",");
+            sc.next(); // Pula o primeiro pois é id
+            txEspecialidade.setText(sc.next());
+            txData.setText(sc.next());
+            txHora.setText(sc.next());
+            txResumo.setText(sc.next());
+            txRetorno.setText(sc.next());
+            sc.close();
+        }
 
 
         ImageView salvarFotoBtn = findViewById(R.id.btnSalvarFoto);
@@ -90,8 +114,14 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                 }
                 else {
                     BancoConsultas bd = new BancoConsultas(v.getContext());
-                    bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
-                    Info.mensagemCerto(v, "Consulta Adicionada com sucesso");
+                    if (bd.verificarIdExistente(Info.getIdEscolhido())){
+                        bd.alterarConsulta(Info.getIdEscolhido(), Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
+                        Info.mensagemCerto(v, "Consulta atualizada com sucesso");
+                    }
+                    else{
+                        bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
+                        Info.mensagemCerto(v, "Consulta adicionada com sucesso");
+                    }
                 }
 
                 //txResumo.setText(bd.pegarDados(Info.getUsername()));

@@ -172,7 +172,11 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                         Info.setUri(Uri.parse(item.getText().toString().substring(7)));
                         Intent intent = new Intent(v.getContext(), ImagemZoom.class);
                         v.getContext().startActivity(intent);
-                        Info.toastCerto(v.getContext(), "Abriu");
+                }
+                if (atividade.getClass() == TelaConsulta.class && i1 == 0){
+                    Info.setEditarConsulta(true);
+                    Intent intent = new Intent(v.getContext(), TelaConsultasRealizadas.class);
+                    v.getContext().startActivity(intent);
                 }
             }
         });
