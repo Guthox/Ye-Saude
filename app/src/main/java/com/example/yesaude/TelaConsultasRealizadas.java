@@ -70,10 +70,10 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                     public void onActivityResult(Uri result) {
                         if (result != null) {
                             imagem = result;
-                            Info.mensagemCerto(atividade.getCurrentFocus(), "Imagem selecionada com sucesso");
+                            Info.toastCerto(atividade, "Imagem selecionada com sucesso");
                         }
                         else{
-                            Info.mensagemErro(atividade.getCurrentFocus(), "Nenhuma imagem selecionada");
+                            Info.toastErro(atividade, "Nenhuma imagem selecionada");
                         }
                     }
                 });
@@ -117,10 +117,12 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                     if (bd.verificarIdExistente(Info.getIdEscolhido())){
                         bd.alterarConsulta(Info.getIdEscolhido(), Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
                         Info.mensagemCerto(v, "Consulta atualizada com sucesso");
+                        Info.setIdEscolhido(-1);
                     }
                     else{
                         bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
                         Info.mensagemCerto(v, "Consulta adicionada com sucesso");
+                        Info.setIdEscolhido(-1);
                     }
                 }
 
