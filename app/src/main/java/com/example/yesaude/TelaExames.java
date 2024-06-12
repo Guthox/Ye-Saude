@@ -117,7 +117,13 @@ public class TelaExames extends AppCompatActivity {
                 }
                 else{
                     BancoExames bd = new BancoExames(v.getContext());
-                    bd.inserir(Info.getUsername(), exameStr, dataStr, imgStr);
+                    try{
+                        byte[] bytes = Info.uriToByteArray(v.getContext(), imgStr);
+                        bd.inserir(Info.getUsername(), exameStr, dataStr, bytes);
+                    }
+                    catch (Exception e){
+                        ;
+                    }
                     Info.toastCerto(v.getContext(), "Exame adicionado");
                     atividade.recreate();
                 }
@@ -245,7 +251,6 @@ public class TelaExames extends AppCompatActivity {
             item[1] = "Tipo: " + scItem.next();
             item[2] = "Data: " + scItem.next();
             item[3] = "Exame: Clique para visualizar";
-            scItem.next(); // Pula o exame String
             lista.add(item);
         }
         sc.close();

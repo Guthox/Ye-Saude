@@ -9,14 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.snackbar.Snackbar;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Info {
     private static String username;
     private static int idEscolhido;
     private static boolean editarConsulta;
     private static Uri uri;
+
+    private static byte[] bytes;
+    public static void setBytes(byte[] novo){bytes = novo;}
+    public static byte[] getBytes(){return bytes;};
 
     public static String getUsername() {
         return username;
@@ -126,6 +133,22 @@ public class Info {
         toast.show();
     }
 
+
+    public static byte[] uriToByteArray(Context context, String uriStr) throws IOException {
+        Uri uri = Uri.parse(uriStr);
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+
+        return byteBuffer.toByteArray();
+    }
 
 
     public static void mensagemErro(View v, String mensagem){

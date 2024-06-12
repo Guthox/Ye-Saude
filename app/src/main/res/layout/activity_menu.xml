@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.208"
         app:shapeAppearanceOverlay="@style/Circular"
-        app:srcCompat="@drawable/ef3b22608fab54c62ec8c84dba9e3e13"
+        app:srcCompat="@drawable/pessoas"
         app:strokeColor="#475D55"
         app:strokeWidth="5dp"
         tools:srcCompat="@tools:sample/avatars" />

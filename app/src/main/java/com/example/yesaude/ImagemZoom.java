@@ -42,10 +42,8 @@ public class ImagemZoom extends AppCompatActivity {
         imageView = findViewById(R.id.imgZoom);
 
         try{
-            Uri uri = Info.getUri();
-            InputStream inputStream = getContentResolver().openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            inputStream.close();
+            byte[] bytes = Info.getBytes();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             imageView.setImageBitmap(bitmap);
         }
         catch (Exception e){

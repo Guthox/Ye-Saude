@@ -19,7 +19,7 @@ public class BancoExames extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table exames (id INTEGER primary key AUTOINCREMENT, user TEXT not null, tipo TEXT not null," +
-                " data TEXT not null,  exame TEXT)");
+                " data TEXT not null,  exame BLOB)");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BancoExames extends SQLiteOpenHelper {
         db.execSQL("drop table if exists exames");
     }
 
-    public boolean inserir(String user, String tipo, String data, String exame){
+    public boolean inserir(String user, String tipo, String data, byte[] exame){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("user", user);
@@ -43,26 +43,23 @@ public class BancoExames extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM exames WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, tipo, data FROM exames WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 int idIndex = cursor.getColumnIndex("id");
                 int especialidadeIndex = cursor.getColumnIndex("tipo");
                 int dataIndex = cursor.getColumnIndex("data");
-                int exameIndex = cursor.getColumnIndex("exame");
 
 
                 if (idIndex != -1) {
                     int id = cursor.getInt(idIndex);
                     String especialidade = cursor.getString(especialidadeIndex);
                     String data = cursor.getString(dataIndex);
-                    String exame = cursor.getString(exameIndex);
 
                     dados.append(id)
                             .append(",").append(especialidade)
                             .append(",").append(data)
-                            .append(",").append(exame)
                             .append("\n");
                 }
             } while (cursor.moveToNext());
@@ -109,9 +106,9 @@ public class BancoExames extends SQLiteOpenHelper {
         return dados.toString();
     }
 
-    public String pegarExame(String user, int id){
+    public byte[] pegarExame(String user, int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        StringBuilder dados = new StringBuilder();
+        byte[] dados = null;
 
         Cursor cursor = db.rawQuery("SELECT exame FROM exames WHERE user = ? AND id = ?", new String[]{user, ""+id});
 
@@ -119,15 +116,15 @@ public class BancoExames extends SQLiteOpenHelper {
             do {
                 int exameIndex = cursor.getColumnIndex("exame");
                 if (exameIndex != -1) {
-                    String exame = cursor.getString(exameIndex);
-                    dados.append(exame);
+                    dados = cursor.getBlob(exameIndex);
+
                 }
             } while (cursor.moveToNext());
         }
         if (cursor != null) {
             cursor.close();
         }
-        return dados.toString();
+        return dados;
     }
 
 }

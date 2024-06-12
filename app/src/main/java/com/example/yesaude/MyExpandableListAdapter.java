@@ -170,8 +170,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 if(atividade.getClass() == TelaExames.class && i1 == 3){
                         BancoExames bd = new BancoExames(v.getContext());
-                        String exame = bd.pegarExame(Info.getUsername(), Info.getIdEscolhido());
-                        Info.setUri(Uri.parse(exame));
+                        byte[] exame = bd.pegarExame(Info.getUsername(), Info.getIdEscolhido());
+                        Info.setBytes(exame);
                         Intent intent = new Intent(v.getContext(), ImagemZoom.class);
                         v.getContext().startActivity(intent);
                 }
