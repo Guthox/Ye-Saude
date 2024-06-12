@@ -57,9 +57,6 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
             txHora.setText(sc.next());
             txResumo.setText(sc.next());
             txRetorno.setText(sc.next());
-            String imgStr = sc.hasNext() ? sc.next() : "";
-            imgStr = imgStr.substring(0, imgStr.length()-1);
-            imagem = Uri.parse(imgStr);
             sc.close();
         }
 
@@ -118,13 +115,20 @@ public class TelaConsultasRealizadas extends AppCompatActivity {
                 }
                 else {
                     BancoConsultas bd = new BancoConsultas(v.getContext());
+                    byte[] bytes = null;
                     if (bd.verificarIdExistente(Info.getIdEscolhido())){
-                        bd.alterarConsulta(Info.getIdEscolhido(), Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
+                        try{
+                            bytes = Info.uriToByteArray(v.getContext(), imgStr);
+                        }
+                        catch (Exception e){
+                            ;
+                        }
+                        bd.alterarConsulta(Info.getIdEscolhido(), Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), bytes);
                         Info.mensagemCerto(v, "Consulta atualizada com sucesso");
                         Info.setIdEscolhido(-1);
                     }
                     else{
-                        bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), imgStr);
+                        bd.inserir(Info.getUsername(), txEspecialidade.getText().toString(), txData.getText().toString(), txHora.getText().toString(), txResumo.getText().toString(), txRetorno.getText().toString(), bytes);
                         Info.mensagemCerto(v, "Consulta adicionada com sucesso");
                         Info.setIdEscolhido(-1);
                     }

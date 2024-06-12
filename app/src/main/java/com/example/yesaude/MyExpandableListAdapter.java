@@ -177,8 +177,9 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 }
                 else if (atividade.getClass() == TelaConsulta.class && i1 == 3){
                     BancoConsultas bd = new BancoConsultas(v.getContext());
-                    String exame = bd.pegarExame(Info.getUsername(), Info.getIdEscolhido());
-                    if (!exame.isEmpty()){
+                    byte[] exame = bd.pegarExame(Info.getUsername(), Info.getIdEscolhido());
+                    Info.setBytes(exame);
+                    if (exame != null){
                         Intent intent = new Intent(v.getContext(), ImagemZoom.class);
                         v.getContext().startActivity(intent);
                     }

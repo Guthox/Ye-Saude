@@ -19,7 +19,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table consultas (id INTEGER primary key AUTOINCREMENT, user TEXT not null, especialidade TEXT not null," +
-                " data TEXT not null, hora TEXT not null, resumo TEXT, retorno TEXT, exame TEXT)");
+                " data TEXT not null, hora TEXT not null, resumo TEXT, retorno TEXT, exame BLOB)");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
         db.execSQL("drop table if exists consultas");
     }
 
-    public boolean inserir(String user, String especialidade, String data, String hora, String resumo, String retorno, String exame){
+    public boolean inserir(String user, String especialidade, String data, String hora, String resumo, String retorno, byte[] exame){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("user", user);
@@ -46,7 +46,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM consultas WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, especialidade, data, hora, resumo, retorno FROM consultas WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -56,8 +56,6 @@ public class BancoConsultas extends SQLiteOpenHelper {
                 int horaIndex = cursor.getColumnIndex("hora");
                 int resumoIndex = cursor.getColumnIndex("resumo");
                 int retornoIndex = cursor.getColumnIndex("retorno");
-                int exameIndex = cursor.getColumnIndex("exame");
-
 
                 if (idIndex != -1) {
                     int id = cursor.getInt(idIndex);
@@ -66,7 +64,6 @@ public class BancoConsultas extends SQLiteOpenHelper {
                     String hora = cursor.getString(horaIndex);
                     String resumo = cursor.getString(resumoIndex);
                     String retorno = cursor.getString(retornoIndex);
-                    String exame = cursor.getString(exameIndex);
 
                     dados.append(id)
                             .append(",").append(especialidade)
@@ -74,7 +71,6 @@ public class BancoConsultas extends SQLiteOpenHelper {
                             .append(",").append(hora)
                             .append(",").append(resumo)
                             .append(",").append(retorno)
-                            .append(",").append(exame)
                             .append("\n");
                 }
             } while (cursor.moveToNext());
@@ -89,7 +85,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM consultas WHERE user = ? AND id = ?", new String[]{user, ""+idU});
+        Cursor cursor = db.rawQuery("SELECT id, especialidade, data, hora, resumo, retorno FROM consultas WHERE user = ? AND id = ?", new String[]{user, ""+idU});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -99,8 +95,6 @@ public class BancoConsultas extends SQLiteOpenHelper {
                 int horaIndex = cursor.getColumnIndex("hora");
                 int resumoIndex = cursor.getColumnIndex("resumo");
                 int retornoIndex = cursor.getColumnIndex("retorno");
-                int exameIndex = cursor.getColumnIndex("exame");
-
 
                 if (idIndex != -1) {
                     int id = cursor.getInt(idIndex);
@@ -109,7 +103,6 @@ public class BancoConsultas extends SQLiteOpenHelper {
                     String hora = cursor.getString(horaIndex);
                     String resumo = cursor.getString(resumoIndex);
                     String retorno = cursor.getString(retornoIndex);
-                    String exame = cursor.getString(exameIndex);
 
                     dados.append(id)
                             .append(",").append(especialidade)
@@ -117,7 +110,6 @@ public class BancoConsultas extends SQLiteOpenHelper {
                             .append(",").append(hora)
                             .append(",").append(resumo)
                             .append(",").append(retorno)
-                            .append(",").append(exame)
                             .append("\n");
                 }
             } while (cursor.moveToNext());
@@ -133,25 +125,22 @@ public class BancoConsultas extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder dados = new StringBuilder();
 
-        Cursor cursor = db.rawQuery("SELECT id, especialidade, data, exame FROM consultas WHERE user = ?", new String[]{user});
+        Cursor cursor = db.rawQuery("SELECT id, especialidade, data FROM consultas WHERE user = ?", new String[]{user});
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 int idIndex = cursor.getColumnIndex("id");
                 int especialidadeIndex = cursor.getColumnIndex("especialidade");
                 int dataIndex = cursor.getColumnIndex("data");
-                int exameIndex = cursor.getColumnIndex("exame");
 
                 if (idIndex != -1) {
                     int id = cursor.getInt(idIndex);
                     String especialidade = cursor.getString(especialidadeIndex);
                     String data = cursor.getString(dataIndex);
-                    String exame = cursor.getString(exameIndex);
 
                     dados.append(id)
                             .append(",").append(especialidade)
                             .append(",").append(data)
-                            .append(",").append(exame)
                             .append("\n");
                 }
             } while (cursor.moveToNext());
@@ -201,7 +190,7 @@ public class BancoConsultas extends SQLiteOpenHelper {
         return dados.toString();
     }
 
-    public boolean alterarConsulta(int id, String user, String especialidade, String data, String hora, String resumo, String retorno, String exame) {
+    public boolean alterarConsulta(int id, String user, String especialidade, String data, String hora, String resumo, String retorno, byte[] exame) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("user", user);
@@ -224,9 +213,9 @@ public class BancoConsultas extends SQLiteOpenHelper {
         return idExiste;
     }
 
-    public String pegarExame(String user, int id){
+    public byte[] pegarExame(String user, int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        StringBuilder dados = new StringBuilder();
+        byte[] dados = null;
 
         Cursor cursor = db.rawQuery("SELECT exame FROM consultas WHERE user = ? AND id = ?", new String[]{user, ""+id});
 
@@ -234,15 +223,14 @@ public class BancoConsultas extends SQLiteOpenHelper {
             do {
                 int exameIndex = cursor.getColumnIndex("exame");
                 if (exameIndex != -1) {
-                    String exame = cursor.getString(exameIndex);
-                    dados.append(exame);
+                    dados = cursor.getBlob(exameIndex);
                 }
             } while (cursor.moveToNext());
         }
         if (cursor != null) {
             cursor.close();
         }
-        return dados.toString();
+        return dados;
     }
 
 }
