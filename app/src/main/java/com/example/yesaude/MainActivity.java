@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 String usuario = edit.getText().toString();
                 edit = findViewById(R.id.senha);
                 String senha = edit.getText().toString();
-                //if (bd.checkLogin(usuario, senha)){
-                if (true){
+                if (bd.checkLogin(usuario, senha)){
+                //if (true){
                     Info.setUsername(usuario);
                     TextView erro = findViewById(R.id.txtInvalido);
                     erro.setText("");
@@ -68,5 +68,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView invalidoTxt = findViewById(R.id.txtInvalido);
+        invalidoTxt.setText("");
+    }
 }

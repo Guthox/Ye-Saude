@@ -45,8 +45,8 @@ public class Info {
         String texto;
         int min = 0;
         int max = 0;
-        min = Integer.parseInt(pressao.substring(0, pressao.indexOf('x')));
-        max = Integer.parseInt(pressao.substring(pressao.indexOf('x')+1));
+        max = Integer.parseInt(pressao.substring(0, pressao.indexOf('x')));
+        min = Integer.parseInt(pressao.substring(pressao.indexOf('x')+1));
         if(min <= 60 || max <= 100){
             texto = "Pressão baixa";
         }

@@ -59,8 +59,7 @@ public class Cadastrar extends AppCompatActivity {
                 edit = findViewById(R.id.nome);
                 String nome = edit.getText().toString();
                 bd.inserir(usuario, nome, senha);
-                Intent intent = new Intent(Cadastrar.this, MainActivity.class);
-                startActivity(intent);
+                Info.toastCerto(v.getContext(), "Usuário cadastrado com sucesso");
             }
         });
 
