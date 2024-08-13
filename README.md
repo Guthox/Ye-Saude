@@ -13,4 +13,11 @@
   João Filipe Pinheiro Marques 21.00740-3
 </p>
 
+##
 
+<p aling="center">
+
+Este projeto tem como objetivo a criação de um aplicativo para celulares Android que permite que os pacientes do Hospital São Camilo poderão marcar consultas, receber lembretes de consultas próximas, lembretes de seus medicamentos, resultados e interpretações de seus exames. O ponto principal desse aplicativo é criar facilidade para que o paciente possa cuidar de sua saúde com facilidade e conveniência. 
+O projeto foi desenvolvido por meio do Android Studio, tendo um banco de dados relacional em MySQL com base na coletânea de dados fornecida, além de usar Java como backend.
+
+</p>
